@@ -1,0 +1,14 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+douban_songs/images/*.jpg
+douban_songs/images/*.png
+douban_songs/*.json
+douban_songs/*.yaml
+douban_songs/*.mp3
+douban_songs/*.m4a
+
+youtube_songs/*.mp4
+youtube_songs/*.m4a
