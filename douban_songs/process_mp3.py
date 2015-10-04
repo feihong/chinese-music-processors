@@ -1,7 +1,7 @@
 """
 Process MP3 files downloaded from Douban music.
 
-Dependencies: 
+Dependencies:
 - Commands: xclip, ffmpeg, mp3gain, atomicparsley
 - Python modules: mutagen
 
@@ -37,29 +37,35 @@ def main():
         json_str = get_clipboard_text()
         root = json.loads(json_str)
 
+    # Write readable input to a yaml file.
     with open('last-input.yaml', 'w') as fp:
         yaml.safe_dump(root, fp, default_flow_style=False, allow_unicode=True)
 
     with open('last-input.json', 'w') as fp:
         fp.write(json.dumps(root, indent=2))
 
-    if 'playlist' in root:
-        for song_obj in root['playlist']:
-            process_song(song_obj)
-    else:
-        process_song(root)
+    songs = [Song(s) for s in root['playlist']]
+
+    download_media(songs)
+    for song in songs:
+        process_song(song)
+
+    # if 'playlist' in root:
+    #     for song_obj in root['playlist']:
+    #         process_song(song_obj)
+    # else:
+    #     process_song(root)
 
 
-def process_song(obj):
-    song = Song(obj)
-    # pprint.pprint(song.d)
-    
-    if not op.exists(song.filename):
-        download(song.url)
+def download_media(songs):
+    for song in songs:
+        if not op.exists(song.filename):
+            download(song.url)
 
-    if not op.exists(song.image_filename) or op.getsize(song.image_filename) == 0:
-        download(song.image_url, song.image_filename)
+        if not op.exists(song.image_filename) or op.getsize(song.image_filename) == 0:
+            download(song.image_url, song.image_filename)
 
+def process_song(song):
     adjust_gain(song)
     convert(song)
     add_metadata(song)
@@ -82,6 +88,7 @@ def convert(song):
     cmd = [
         'ffmpeg',
         '-i', song.filename,
+        '-vn',                  # ignore video
         '-c:a', 'libfdk_aac',   # use best encoder
         '-vbr', '4',            # use high quality
         song.new_filename,
@@ -98,7 +105,7 @@ def download(url, dest=None):
         raise Exception('Unable to download file at ' + url)
 
 
-def add_metadata(song):    
+def add_metadata(song):
     cmd = [
         'AtomicParsley',
         song.new_filename,
@@ -144,9 +151,9 @@ class Song:
             images = audio.getall('APIC')
         except ID3NoHeaderError:
             images = None
-        
-        # Extract the embedded image, if one exists.
+
         if images:
+            # Use the first embedded image.
             image = images[0]
             if image.mime in ('image/jpeg', 'image/jpg'):
                 ext = '.jpg'
@@ -157,17 +164,20 @@ class Song:
                     image.mime, self.filename))
             filename = op.splitext(self.filename)[0] + ext
             path = op.join('images', filename)
+
+            # Extract the embedded image to the images directory.
             if not op.exists(path):
                 with open(path, 'wb') as fp:
                     fp.write(image.data)
             return path
         else:
+            # Use the downloaded image.
             filename = self.image_url.rsplit('/', 1)[1]
             return op.join('images', filename)
 
 
 def format_filename(s):
-    return s.replace('/', '_') 
+    return s.replace('/', '_')
 
 
 def get_clipboard_text():
