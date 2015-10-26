@@ -50,12 +50,6 @@ def main():
     for song in songs:
         process_song(song)
 
-    # if 'playlist' in root:
-    #     for song_obj in root['playlist']:
-    #         process_song(song_obj)
-    # else:
-    #     process_song(root)
-
 
 def download_media(songs):
     for song in songs:
@@ -66,6 +60,10 @@ def download_media(songs):
             download(song.image_url, song.image_filename)
 
 def process_song(song):
+    if op.exists(song.new_filename):
+        print(u'Skipping %s' % song.filename)
+        return
+
     adjust_gain(song)
     convert(song)
     add_metadata(song)
@@ -114,8 +112,19 @@ def add_metadata(song):
         '--genre', song.genre,
         '--year', song.year,
         '--comment', song.artist_url,
-        '--lyrics', song.lyrics,
         '--artwork', song.image_filename,
+        '--overWrite',
+    ]
+    retcode = subprocess.call(cmd)
+    if retcode != 0:
+        print ' '.join(cmd)
+        raise Exception('AtomicParsley failed on file ' + song.new_filename)
+
+    # Now add the lyrics. This step can sometimes fail for mysterious reasons.
+    cmd = [
+        'AtomicParsley',
+        song.new_filename,
+        '--lyrics', song.lyrics,
         '--overWrite',
     ]
     retcode = subprocess.call(cmd)
