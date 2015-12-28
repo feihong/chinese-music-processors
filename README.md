@@ -15,10 +15,15 @@ Install the following Firefox addons and user script:
 
 Configure Cache Download like so:
 
-![](https://raw.githubusercontent.com/feihong/chinese-music-processors/master/images/cache_download_rule.png)
+![](https://raw.githubusercontent.com/feihong/chinese-music-processors/master/images/cache_download_rule_mp3.png)
 
 - Filename expression: `%filename%.%ext%`
 - Regular expression to match files: `.*douban\.com.*\.mp3`
+
+![](https://raw.githubusercontent.com/feihong/chinese-music-processors/master/images/cache_download_rule_jpg.png)
+
+- Filename expression: `%filename%.%ext%`
+- Regular expression to match files: `.*douban\.com.*large.*jpg`
 
 Install dependencies on Ubuntu:
 
@@ -40,3 +45,8 @@ cd chinese-music-processors
 mkvirtualenv music
 pip install -r requirements.txt
 ```
+
+Usage
+-----
+
+coming soon?
