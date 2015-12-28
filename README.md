@@ -9,7 +9,7 @@ Installation
 Install the following manually:
 
 - [Greasemonkey](https://addons.mozilla.org/en-us/firefox/addon/greasemonkey/)
-- douban_song_metadata.user.js user script from this repo
+- [douban_song_metadata.user.js user script](https://raw.githubusercontent.com/feihong/chinese-music-processors/master/douban_song_metadata.user.js) from this repo
 - virtualenvwrapper
 
 You should probably install these, but there are equivalent addons that would also work:
