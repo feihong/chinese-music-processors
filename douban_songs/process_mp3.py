@@ -70,7 +70,12 @@ def process_song(song):
 
 
 def adjust_gain(song):
-    # Use mp3gain instead of aacgain because it's completely lossless.
+    """
+    Adjust the gain on the given song so the volume is neither too loud nor too
+    soft. We use mp3gain here instead of aacgain because it's completely
+    lossless.
+
+    """
     cmd = [
         'mp3gain',
         # Apply Track gain automatically (all files set to equal loudness)
@@ -83,6 +88,10 @@ def adjust_gain(song):
 
 
 def convert(song):
+    """
+    Convert the given song from MP3 to AAC.
+
+    """
     cmd = [
         'ffmpeg',
         '-i', song.filename,
@@ -104,6 +113,10 @@ def download(url, dest=None):
 
 
 def add_metadata(song):
+    """
+    Add metadata to the given song's AAC file.
+
+    """
     cmd = [
         'AtomicParsley',
         song.new_filename,
@@ -120,7 +133,8 @@ def add_metadata(song):
         print ' '.join(cmd)
         raise Exception('AtomicParsley failed on file ' + song.new_filename)
 
-    # Now add the lyrics. This step can sometimes fail for mysterious reasons.
+    # Now add the lyrics. This step can sometimes fail for mysterious reasons,
+    # which is why we save it for last.
     cmd = [
         'AtomicParsley',
         song.new_filename,
@@ -130,7 +144,7 @@ def add_metadata(song):
     retcode = subprocess.call(cmd)
     if retcode != 0:
         print ' '.join(cmd)
-        raise Exception('AtomicParsley failed on file ' + song.new_filename)
+        raise Exception('AtomicParsley failed to add lyrics to file ' + song.new_filename)
 
 
 class Song:
