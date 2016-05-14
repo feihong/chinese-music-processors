@@ -28,8 +28,14 @@ Configure Cache Download like so:
 Install dependencies on Ubuntu:
 
 ```
-apt-get install xclip ffmpeg mp3gain atomicparsley aacgain
+apt-get install xclip ffmpeg atomicparsley mp3gain aacgain
 ```
+
+If you are on 16.04, you may need to download binaries for mp3gain and aacgain. In addition, you'll likely need to build ffmpeg yourself.
+
+- [mp3gain](https://pkgs.org/ubuntu-14.04/ubuntu-universe-amd64/mp3gain_1.5.2-r2-6_amd64.deb.html)
+- [aacgain](https://launchpad.net/~stefanobalocco/+archive/ubuntu/ppa/+packages)
+- [ffmpeg](https://github.com/feihong/feihong-setup/blob/master/ubuntu/compile_ffmpeg.sh)
 
 If you don't already have it, install virtualenvwrapper:
 

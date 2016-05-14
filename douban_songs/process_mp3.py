@@ -89,7 +89,8 @@ def adjust_gain(song):
 
 def convert(song):
     """
-    Convert the given song from MP3 to AAC.
+    Convert the given song from MP3 to AAC. For more information about the
+    parameters, see: https://trac.ffmpeg.org/wiki/Encode/AAC
 
     """
     cmd = [
