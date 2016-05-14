@@ -2,7 +2,7 @@
 // @name        Get Douban song metadata
 // @namespace   https://github.com/feihong/
 // @description Adds a button to the Douban player page that puts the song metadata onto the clipboard.
-// @include     http://music.douban.com/artists/player/*
+// @include     https://music.douban.com/artists/player/*
 // @version     1
 // @grant       GM_setClipboard
 // ==/UserScript==
@@ -19,7 +19,7 @@ button.innerHTML = 'Copy song metadata to clipboard';
 div.appendChild(button);
 button.onclick = function() {
     var text = JSON.stringify(unsafeWindow.__bootstrap_data);
-    GM_setClipboard(text);  
+    GM_setClipboard(text);
 };
 
 // Add button that inserts a list of download links into page.
