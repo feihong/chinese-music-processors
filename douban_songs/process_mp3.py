@@ -155,7 +155,7 @@ class Song:
         self.title = unescape(self.d['title'])      # get rid of &amp; etc
         self.url = self.d['url']
         self.lyrics = self.d['lyrics']
-        self.artist = self.d['artist']['name']
+        self.artist = unescape(self.d['artist']['name'])
         self.artist_url = self.d['artist']['url']
         self.image_url = self.d['artist']['picture']
         self.genre = self.d['artist']['style']
