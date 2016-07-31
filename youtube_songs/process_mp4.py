@@ -11,7 +11,7 @@ Usage: python process_mp4_files.py /path/to/mp4/files/
 
 Each input file should use the following format for their filename:
 
-ALBUM  TITLE  ARTIST
+ALBUM  ARTIST  TITLE
 
 Note that there are two spaces between each element.
 
@@ -56,7 +56,7 @@ class Song:
     def __init__(self, mp4_file):
         self.input_file = mp4_file
         stem = Path(mp4_file).stem
-        self.album, self.title, self.artist = stem.split('  ')
+        self.album, self.artist, self.title = stem.split('  ')
 
         parent = Path(mp4_file).parent
         self.output_file = str(parent.joinpath(
