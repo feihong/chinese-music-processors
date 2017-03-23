@@ -4,6 +4,33 @@ These are scripts to help you process metadata for music files downloaded from [
 
 ## Installation
 
+### Python
+
+Install dependencies on Ubuntu:
+
+`apt-get install xclip ffmpeg atomicparsley mp3gain aacgain`
+
+If you are on 16.04, you may need to download binaries for mp3gain and aacgain. In addition, you'll need to build ffmpeg yourself.
+
+- [mp3gain](https://pkgs.org/ubuntu-14.04/ubuntu-universe-amd64/mp3gain_1.5.2-r2-6_amd64.deb.html)
+- [aacgain](https://launchpad.net/~stefanobalocco/+archive/ubuntu/ppa/+packages)
+- [ffmpeg](https://github.com/feihong/feihong-setup/blob/master/ubuntu/compile_ffmpeg.sh)
+
+If you don't already have it, install virtualenvwrapper:
+
+`pip install virtualenvwrapper`
+
+Now you can install the Python scripts:
+
+```
+git clone https://github.com/feihong/chinese-music-processors
+cd chinese-music-processors
+mkvirtualenv -p python3 music
+pip install -r requirements.txt
+```
+
+### Browser
+
 Install the following Firefox addons and user script:
 
 - [Greasemonkey](https://addons.mozilla.org/en-us/firefox/addon/greasemonkey/)
@@ -23,33 +50,12 @@ Configure Cache Download like so:
 - Filename expression: `%filename%.%ext%`
 - Regular expression to match files: `.*doubanio\.com.*large.*jpg`
 
-Install dependencies on Ubuntu:
-
-```
-apt-get install xclip ffmpeg atomicparsley mp3gain aacgain
-```
-
-If you are on 16.04, you may need to download binaries for mp3gain and aacgain. In addition, you'll likely need to build ffmpeg yourself.
-
-- [mp3gain](https://pkgs.org/ubuntu-14.04/ubuntu-universe-amd64/mp3gain_1.5.2-r2-6_amd64.deb.html)
-- [aacgain](https://launchpad.net/~stefanobalocco/+archive/ubuntu/ppa/+packages)
-- [ffmpeg](https://github.com/feihong/feihong-setup/blob/master/ubuntu/compile_ffmpeg.sh)
-
-If you don't already have it, install virtualenvwrapper:
-
-```
-pip install virtualenvwrapper
-```
-
-Now you can install the Python scripts:
-
-```
-git clone https://github.com/feihong/chinese-music-processors
-cd chinese-music-processors
-mkvirtualenv music
-pip install -r requirements.txt
-```
-
 ## Usage
 
-tbd
+Process .mp3 files downloaded from Douban Music  to `douban_songs`:
+
+`inv douban`
+
+Process .mp4 files downloaded from YouTube to `youtube_songs`:
+
+`inv youtube`
