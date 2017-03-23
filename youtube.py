@@ -44,60 +44,69 @@ http://ubuntuforums.org/showthread.php?t=2194537
 """
 
 import sys
-import os
-import os.path as op
 import subprocess
 import shutil
 import tempfile
 from pathlib import Path
 
 
+def process():
+    output_dir = Path(__file__).parent / 'youtube_songs'
+
+    for mp4_file in output_dir.glob('*.mp4'):
+        try:
+            song = Song(mp4_file)
+        except Exception as ex:
+            continue
+
+        extract_elements(song)
+        adjust_gain(song)
+        add_metadata(song)
+
+
 class Song:
     def __init__(self, mp4_file):
         self.input_file = mp4_file
-        stem = Path(mp4_file).stem
-        self.album, self.artist, self.title = stem.split('  ')
+        self.album, self.artist, self.title = mp4_file.stem.split('  ')
 
-        parent = Path(mp4_file).parent
-        self.output_file = str(parent.joinpath(
-            '%s  %s.m4a' % (self.artist, self.title)))
+        self.output_file = mp4_file.parent / mp4_file.with_suffix('.m4a')
 
         self.artwork_file = None
         for ext in ('.jpg', '.png'):
-            imgfile = parent.joinpath(stem + ext)
+            imgfile = mp4_file.with_suffix(ext)
             if imgfile.exists():
-                self.artwork_file = str(imgfile)
+                self.artwork_file = imgfile
                 break
 
         if not self.artwork_file:
-            self.tempdir = tempfile.mkdtemp()
-            self.artwork_file = op.join(self.tempdir, 'artwork.jpg')
+            self.tempdir = Path(tempfile.mkdtemp())
+            self.artwork_file = self.tempdir / 'artwork.jpg'
 
     def __str__(self):
         return '%s - %s - %s (%s)' % (self.artist, self.title, self.album)
 
     def __del__(self):
-        if hasattr(self, 'tempdir') and op.exists(self.tempdir):
-            shutil.rmtree(self.tempdir)
+        if hasattr(self, 'tempdir') and self.tempdir.exists():
+            shutil.rmtree(str(self.tempdir))
 
 
 def extract_elements(song):
     cmd = [
         'ffmpeg',
-        '-i', song.input_file,
+        '-i', str(song.input_file),
         '-vn',               # ignore video
         '-acodec', 'copy',   # copy, dont' reencode
         song.output_file
     ]
     subprocess.call(cmd)
 
-    if not op.exists(song.artwork_file):
+    if not song.artwork_file.exists():
         cmd = [
             'ffmpeg',
             '-ss', '0',
-            '-i', song.input_file,
+            '-i', str(song.input_file),
             '-frames:v', '1',
-            song.artwork_file,
+            str(song.artwork_file),
         ]
         subprocess.call(cmd)
 
@@ -107,7 +116,7 @@ def adjust_gain(song):
         'aacgain',
         '-r',       # apply Track gain automatically (all files set to equal loudness)
         '-k',       # automatically lower Track/Album gain to not clip audio
-        song.output_file
+        str(song.output_file),
     ]
     subprocess.call(cmd)
 
@@ -115,7 +124,7 @@ def adjust_gain(song):
 def add_metadata(song):
     cmd = [
         'AtomicParsley',
-        song.output_file,
+        str(song.output_file),
         '--title', song.title,
         '--artist', song.artist,
         '--album', song.album,
@@ -123,21 +132,3 @@ def add_metadata(song):
         '--overWrite',
     ]
     subprocess.call(cmd)
-
-
-if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        dirname = sys.argv[1]
-    else:
-        dirname = '.'
-    mp4_files = (f for f in os.listdir(dirname) if f.endswith('.mp4'))
-
-    for mp4_file in mp4_files:
-        try:
-            song = Song(op.join(dirname, mp4_file))
-        except Exception as ex:
-            continue
-
-        extract_elements(song)
-        adjust_gain(song)
-        add_metadata(song)
