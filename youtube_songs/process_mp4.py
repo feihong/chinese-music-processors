@@ -49,7 +49,7 @@ import os.path as op
 import subprocess
 import shutil
 import tempfile
-from pathlib2 import Path
+from pathlib import Path
 
 
 class Song:

@@ -22,6 +22,7 @@ import os
 import os.path as op
 import shutil
 import codecs
+import html
 
 import yaml
 from mutagen.id3 import ID3, ID3NoHeaderError
@@ -131,7 +132,7 @@ def add_metadata(song):
     ]
     retcode = subprocess.call(cmd)
     if retcode != 0:
-        print ' '.join(cmd)
+        print(' '.join(cmd))
         raise Exception('AtomicParsley failed on file ' + song.new_filename)
 
     # Now add the lyrics. This step can sometimes fail for mysterious reasons,
@@ -144,7 +145,7 @@ def add_metadata(song):
     ]
     retcode = subprocess.call(cmd)
     if retcode != 0:
-        print ' '.join(cmd)
+        print(' '.join(cmd))
         raise Exception('AtomicParsley failed to add lyrics to file ' + song.new_filename)
 
 
@@ -152,10 +153,10 @@ class Song:
     def __init__(self, dictionary):
         self.d = dictionary
 
-        self.title = unescape(self.d['title'])      # get rid of &amp; etc
+        self.title = html.unescape(self.d['title'])      # get rid of &amp; etc
         self.url = self.d['url']
         self.lyrics = self.d['lyrics']
-        self.artist = unescape(self.d['artist']['name'])
+        self.artist = html.unescape(self.d['artist']['name'])
         self.artist_url = self.d['artist']['url']
         self.image_url = self.d['artist']['picture']
         self.genre = self.d['artist']['style']
@@ -209,14 +210,6 @@ def get_clipboard_text():
         return subprocess.check_output('pbpaste')
     else:
         return subprocess.check_output(['xclip', '-o'])
-
-
-def unescape(s):
-    import htmllib
-    p = htmllib.HTMLParser(None)
-    p.save_bgn()
-    p.feed(s)
-    return p.save_end()
 
 
 if __name__ == '__main__':
