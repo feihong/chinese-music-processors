@@ -16,33 +16,31 @@ https://wiki.python.org/moin/EscapingHtml
 import sys
 import json
 import subprocess
-import tempfile
 import pprint
-import os
-import os.path as op
-import shutil
-import codecs
+from pathlib import Path
 import html
 
 import yaml
 from mutagen.id3 import ID3, ID3NoHeaderError
 
 
-def main():
-    if len(sys.argv) > 1:
+output_dir = Path(__file__).parent / 'douban_songs'
+
+
+def process(yaml_file):
+    if yaml_file is not None:
         # Get input from YAML file.
-        yaml_str = open(sys.argv[1]).read()
-        root = yaml.load(yaml_str)
+        root = yaml.load(Path(yaml_file).read_text())
     else:
         # Get input from JSON string on clipboard.
         json_str = get_clipboard_text()
         root = json.loads(json_str)
 
     # Write readable input to a yaml file.
-    with open('last-input.yaml', 'w') as fp:
+    with (output_dir / 'last-input.yaml').open('w') as fp:
         yaml.safe_dump(root, fp, default_flow_style=False, allow_unicode=True)
 
-    with open('last-input.json', 'w') as fp:
+    with (output_dir / 'last-input.json').open('w') as fp:
         fp.write(json.dumps(root, indent=2))
 
     songs = [Song(s) for s in root['playlist']]
@@ -54,15 +52,16 @@ def main():
 
 def download_media(songs):
     for song in songs:
-        if not op.exists(song.filename):
-            download(song.url)
+        if not song.input_file.exists():
+            download(song.url, song.input_file)
 
-        if not op.exists(song.image_filename) or op.getsize(song.image_filename) == 0:
-            download(song.image_url, song.image_filename)
+        if not song.image_file.exists() or song.image_file.stat().st_size == 0:
+            download(song.image_url, song.image_file)
+
 
 def process_song(song):
-    if op.exists(song.new_filename):
-        print(u'Skipping %s' % song.filename)
+    if song.output_file.exists():
+        print('Skipping {}'.format(song.input_file))
         return
 
     adjust_gain(song)
@@ -83,7 +82,7 @@ def adjust_gain(song):
         '-r',
         # Automatically lower Track/Album gain to not clip audio
         '-k',
-        song.filename
+        str(song.input_file),
     ]
     subprocess.call(cmd)
 
@@ -96,19 +95,17 @@ def convert(song):
     """
     cmd = [
         'ffmpeg',
-        '-i', song.filename,
+        '-i', str(song.input_file),
         '-vn',                  # ignore video
         '-c:a', 'libfdk_aac',   # use best encoder
         '-vbr', '4',            # use high quality
-        song.new_filename,
+        str(song.output_file),
     ]
     subprocess.call(cmd)
 
 
-def download(url, dest=None):
-    cmd = ['wget', url]
-    if dest:
-        cmd.extend(['-O', dest])
+def download(url, dest):
+    cmd = ['wget', url, '-O', str(dest)]
     retcode = subprocess.call(cmd)
     if retcode != 0:
         raise Exception('Unable to download file at ' + url)
@@ -121,13 +118,13 @@ def add_metadata(song):
     """
     cmd = [
         'AtomicParsley',
-        song.new_filename,
+        str(song.output_file),
         '--title', song.title,
         '--artist', song.artist,
         '--genre', song.genre,
         '--year', song.year,
         '--comment', song.artist_url,
-        '--artwork', song.image_filename,
+        '--artwork', str(song.image_file),
         '--overWrite',
     ]
     retcode = subprocess.call(cmd)
@@ -139,7 +136,7 @@ def add_metadata(song):
     # which is why we save it for last.
     cmd = [
         'AtomicParsley',
-        song.new_filename,
+        str(song.output_file),
         '--lyrics', song.lyrics,
         '--overWrite',
     ]
@@ -161,18 +158,20 @@ class Song:
         self.image_url = self.d['artist']['picture']
         self.genre = self.d['artist']['style']
         self.year = self.d['publish_date'][:4]
-        self.filename = self.url.rsplit('/', 1)[1]
-        self.new_filename = format_filename('%s  %s.m4a' % (
+        input_filename = self.url.rsplit('/', 1)[1]
+        self.input_file = output_dir / input_filename
+        output_filename = format_filename('%s  %s.m4a' % (
             self.artist, self.title))
-        self.image_filename = self.get_image_filename()
+        self.output_file = output_dir / output_filename
+        self.image_file = self._get_image_file()
 
     @property
     def comments(self):
         return json.dumps(self.d)
 
-    def get_image_filename(self):
+    def _get_image_file(self):
         try:
-            audio = ID3(self.filename)
+            audio = ID3(str(self.input_file))
             images = audio.getall('APIC')
         except ID3NoHeaderError:
             images = None
@@ -187,18 +186,19 @@ class Song:
             else:
                 raise Exception('Encountered unexpected image type %s in %s' % (
                     image.mime, self.filename))
-            filename = op.splitext(self.filename)[0] + ext
-            path = op.join('images', filename)
+
+            result = output_dir / 'images' / self.input_file.stem + ext
 
             # Extract the embedded image to the images directory.
-            if not op.exists(path):
-                with open(path, 'wb') as fp:
+            if not result.exists():
+                with result.open('wb') as fp:
                     fp.write(image.data)
-            return path
+
+            return result
         else:
             # Use the downloaded image.
             filename = self.image_url.rsplit('/', 1)[1]
-            return op.join('images', filename)
+            return output_dir / 'images' / filename
 
 
 def format_filename(s):
