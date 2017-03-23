@@ -1,10 +1,8 @@
-Chinese Music Processors
-========================
+# Chinese Music Processors
 
-These are scripts to help you process metadata for music files downloaded from Douban Music and Youtube.
+These are scripts to help you process metadata for music files downloaded from [Douban Music](https://music.douban.com/) and Youtube.
 
-Installation
-------------
+## Installation
 
 Install the following Firefox addons and user script:
 
@@ -52,7 +50,6 @@ mkvirtualenv music
 pip install -r requirements.txt
 ```
 
-Usage
------
+## Usage
 
-coming soon?
+tbd
