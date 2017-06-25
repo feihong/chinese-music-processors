@@ -4,7 +4,13 @@ These are scripts to help you process metadata for music files downloaded from [
 
 ## Installation
 
-### Python
+### Mac
+
+`brew install mp3gain aacgain atomicparsley`
+
+`brew install ffmpeg --with-fdk-aac`
+
+### Linux
 
 Install dependencies on Ubuntu:
 
@@ -15,6 +21,8 @@ If you are on 16.04, you may need to download binaries for mp3gain and aacgain. 
 - [mp3gain](https://pkgs.org/ubuntu-14.04/ubuntu-universe-amd64/mp3gain_1.5.2-r2-6_amd64.deb.html)
 - [aacgain](https://launchpad.net/~stefanobalocco/+archive/ubuntu/ppa/+packages)
 - [ffmpeg](https://github.com/feihong/feihong-setup/blob/master/ubuntu/compile_ffmpeg.sh)
+
+### Python
 
 If you don't already have it, install virtualenvwrapper:
 
