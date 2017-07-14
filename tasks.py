@@ -14,3 +14,10 @@ def youtube(ctx):
     "Process songs from YouTube"
     from youtube import process
     process()
+
+
+@task
+def m4a(ctx):
+    "Process m4a files"
+    from m4a_file import process
+    process()

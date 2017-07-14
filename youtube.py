@@ -5,8 +5,6 @@ For all the .mp4 files in a given directory, do the following:
 - Adjust gain.
 - Add metadata (title, artist, album, artwork).
 
-Usage: python process_mp4_files.py /path/to/mp4/files/
-
 ---
 
 Each input file should use the following format for their filename:
