@@ -1,3 +1,4 @@
 Invoke
 mutagen
 PyYAML
+youtube_dl

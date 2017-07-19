@@ -11,3 +11,5 @@ __pycache__/
 *.mp3
 *.mp4
 *.m4a
+
+input.txt

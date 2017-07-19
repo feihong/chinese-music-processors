@@ -48,65 +48,40 @@ import tempfile
 from pathlib import Path
 
 
-def process():
-    output_dir = Path(__file__).parent / 'youtube_songs'
-
-    for mp4_file in output_dir.glob('*.mp4'):
-        try:
-            song = Song(mp4_file)
-        except Exception as ex:
-            continue
-
-        extract_elements(song)
+def process(input_file):
+    for song in get_songs(input_file):
+        download_song(song)
         adjust_gain(song)
         add_metadata(song)
 
 
+def get_songs(input_file):
+    with open(input_file) as fp:
+        for line in fp:
+            line = line.strip()
+            if line:
+                args = line.split('  ')
+                yield Song(*args)
+
+
 class Song:
-    def __init__(self, mp4_file):
-        self.input_file = mp4_file
-        self.album, self.artist, self.title = mp4_file.stem.split('  ')
-
-        self.output_file = mp4_file.parent / mp4_file.with_suffix('.m4a')
-
-        self.artwork_file = None
-        for ext in ('.jpg', '.png'):
-            imgfile = mp4_file.with_suffix(ext)
-            if imgfile.exists():
-                self.artwork_file = imgfile
-                break
-
-        if not self.artwork_file:
-            self.tempdir = Path(tempfile.mkdtemp())
-            self.artwork_file = self.tempdir / 'artwork.jpg'
-
-    def __str__(self):
-        return '%s - %s - %s (%s)' % (self.artist, self.title, self.album)
-
-    def __del__(self):
-        if hasattr(self, 'tempdir') and self.tempdir.exists():
-            shutil.rmtree(str(self.tempdir))
+    def __init__(self, album, artist, title, url):
+        self.album = album
+        self.artist = artist
+        self.title = title
+        self.url = url
+        self.output_file = Path('youtube_songs') / '{}  {}.m4a'.format(artist, title)
 
 
-def extract_elements(song):
+def download_song(song):
     cmd = [
-        'ffmpeg',
-        '-i', str(song.input_file),
-        '-vn',               # ignore video
-        '-acodec', 'copy',   # copy, dont' reencode
-        song.output_file
+        'youtube-dl',
+        '--embed-thumbnail',
+        '--format', 'bestaudio[ext=m4a]',
+        '--output', song.output_file,
+        song.url
     ]
     subprocess.call(cmd)
-
-    if not song.artwork_file.exists():
-        cmd = [
-            'ffmpeg',
-            '-ss', '0',
-            '-i', str(song.input_file),
-            '-frames:v', '1',
-            str(song.artwork_file),
-        ]
-        subprocess.call(cmd)
 
 
 def adjust_gain(song):
@@ -126,7 +101,7 @@ def add_metadata(song):
         '--title', song.title,
         '--artist', song.artist,
         '--album', song.album,
-        '--artwork', song.artwork_file,
+        '--comment', song.url,
         '--overWrite',
     ]
     subprocess.call(cmd)

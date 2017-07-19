@@ -10,10 +10,10 @@ def douban(ctx, yaml_file=None):
 
 
 @task
-def youtube(ctx):
+def youtube(ctx, input_file):
     "Process songs from YouTube"
     from youtube import process
-    process()
+    process(input_file)
 
 
 @task
