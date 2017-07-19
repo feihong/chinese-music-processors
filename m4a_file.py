@@ -17,17 +17,28 @@ def process():
 
     for m4a_file in output_dir.glob('*.m4a'):
         print(m4a_file)
-        song = Song(m4a_file)
+        try:
+            song = Song(m4a_file)
+        except InvalidSongName:
+            print('Skipping {}'.format(m4a_file))
+            continue
 
         shutil.copy(song.input_file, song.output_file)
         adjust_gain(song)
         add_metadata(song)
 
 
+class InvalidSongName(Exception):
+    pass
+
+
 class Song:
     def __init__(self, m4a_file):
         self.input_file = m4a_file
-        self.album, self.artist, self.title = m4a_file.stem.split('  ')
+        try:
+            self.album, self.artist, self.title = m4a_file.stem.split('  ')
+        except ValueError:
+            raise InvalidSongName
 
         self.output_file = (m4a_file.parent / 'output' /
             Path('{}  {}.m4a'.format(self.artist, self.title)))
