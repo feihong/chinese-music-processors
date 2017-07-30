@@ -24,6 +24,7 @@ import yaml
 from mutagen.id3 import ID3, ID3NoHeaderError
 
 
+input_dir = Path.home() / 'Downloads/douban-songs'
 output_dir = Path(__file__).parent / 'douban_songs'
 
 
@@ -147,7 +148,7 @@ class Song:
         self.genre = self.d['artist']['style']
         self.year = self.d['publish_date'][:4]
         input_filename = self.url.rsplit('/', 1)[1]
-        self.input_file = output_dir / input_filename
+        self.input_file = input_dir / input_filename
         output_filename = format_filename('%s  %s.m4a' % (
             self.artist, self.title))
         self.output_file = output_dir / output_filename
@@ -184,7 +185,7 @@ class Song:
         #
         #     return result
         # else:
-        
+
         # Use the downloaded image.
         filename = self.image_url.rsplit('/', 1)[1]
         return output_dir / 'images' / filename
