@@ -27,23 +27,11 @@ from mutagen.id3 import ID3, ID3NoHeaderError
 output_dir = Path(__file__).parent / 'douban_songs'
 
 
-def process(yaml_file):
-    if yaml_file is not None:
-        # Get input from YAML file.
-        root = yaml.load(Path(yaml_file).read_text())
-    else:
-        # Get input from JSON string on clipboard.
-        json_str = get_clipboard_text()
-        root = json.loads(json_str)
+def process(input_file):
+    with open(input_file) as fp:
+        playlist = json.load(fp)
 
-    # Write readable input to a yaml file.
-    with (output_dir / 'last-input.yaml').open('w') as fp:
-        yaml.safe_dump(root, fp, default_flow_style=False, allow_unicode=True)
-
-    with (output_dir / 'last-input.json').open('w') as fp:
-        fp.write(json.dumps(root, indent=2))
-
-    songs = [Song(s) for s in root['playlist']]
+    songs = [Song(s) for s in playlist]
 
     download_media(songs)
     for song in songs:
@@ -52,8 +40,8 @@ def process(yaml_file):
 
 def download_media(songs):
     for song in songs:
-        if not song.input_file.exists():
-            download(song.url, song.input_file)
+        # if not song.input_file.exists():
+        #     download(song.url, song.input_file)
 
         if not song.image_file.exists() or song.image_file.stat().st_size == 0:
             download(song.image_url, song.image_file)
@@ -170,46 +158,40 @@ class Song:
         return json.dumps(self.d)
 
     def _get_image_file(self):
-        try:
-            audio = ID3(str(self.input_file))
-            images = audio.getall('APIC')
-        except ID3NoHeaderError:
-            images = None
-
-        if images:
-            # Use the first embedded image.
-            image = images[0]
-            if image.mime in ('image/jpeg', 'image/jpg'):
-                ext = '.jpg'
-            elif image.mime == 'image/png':
-                ext = '.png'
-            else:
-                raise Exception('Encountered unexpected image type %s in %s' % (
-                    image.mime, self.filename))
-
-            result = output_dir / 'images' / self.input_file.stem + ext
-
-            # Extract the embedded image to the images directory.
-            if not result.exists():
-                with result.open('wb') as fp:
-                    fp.write(image.data)
-
-            return result
-        else:
-            # Use the downloaded image.
-            filename = self.image_url.rsplit('/', 1)[1]
-            return output_dir / 'images' / filename
+        # try:
+        #     audio = ID3(str(self.input_file))
+        #     images = audio.getall('APIC')
+        # except ID3NoHeaderError:
+        #     images = None
+        #
+        # if images:
+        #     # Use the first embedded image.
+        #     image = images[0]
+        #     if image.mime in ('image/jpeg', 'image/jpg'):
+        #         ext = '.jpg'
+        #     elif image.mime == 'image/png':
+        #         ext = '.png'
+        #     else:
+        #         raise Exception('Encountered unexpected image type %s in %s' % (
+        #             image.mime, self.filename))
+        #
+        #     result = output_dir / 'images' / self.input_file.stem + ext
+        #
+        #     # Extract the embedded image to the images directory.
+        #     if not result.exists():
+        #         with result.open('wb') as fp:
+        #             fp.write(image.data)
+        #
+        #     return result
+        # else:
+        
+        # Use the downloaded image.
+        filename = self.image_url.rsplit('/', 1)[1]
+        return output_dir / 'images' / filename
 
 
 def format_filename(s):
     return s.replace('/', '_')
-
-
-def get_clipboard_text():
-    if sys.platform == 'darwin':
-        return subprocess.check_output('pbpaste')
-    else:
-        return subprocess.check_output(['xclip', '-o'])
 
 
 if __name__ == '__main__':

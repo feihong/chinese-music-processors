@@ -3,10 +3,10 @@ from invoke import task
 
 
 @task
-def douban(ctx, yaml_file=None):
+def douban(ctx, input_file):
     "Process songs from Douban Music"
     from douban import process
-    process(yaml_file)
+    process(input_file)
 
 
 @task
