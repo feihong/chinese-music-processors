@@ -3,14 +3,14 @@ from invoke import task
 
 
 @task
-def douban(ctx, input_file):
+def douban(ctx, input_file='input.json'):
     "Process songs from Douban Music"
     from douban import process
     process(input_file)
 
 
 @task
-def youtube(ctx, input_file):
+def youtube(ctx, input_file='input.txt'):
     "Process songs from YouTube"
     from youtube import process
     process(input_file)

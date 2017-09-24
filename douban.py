@@ -30,7 +30,7 @@ output_dir = Path(__file__).parent / 'douban_songs'
 
 def process(input_file):
     with open(input_file) as fp:
-        playlist = json.load(fp)['playlist']
+        playlist = json.load(fp)
 
     songs = [Song(s) for s in playlist]
 

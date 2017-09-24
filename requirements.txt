@@ -1,4 +1,3 @@
-Invoke
-mutagen
-PyYAML
-youtube_dl
+invoke==0.21.0
+mutagen==1.37
+youtube-dl==2017.9.15
