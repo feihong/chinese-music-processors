@@ -6,7 +6,6 @@ __pycache__/
 .DS_Store
 *.jpg
 *.png
-*.json
 *.yaml
 *.mp3
 *.mp4
