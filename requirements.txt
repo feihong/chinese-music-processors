@@ -1,3 +1,0 @@
-invoke==0.21.0
-mutagen==1.37
-youtube-dl==2017.10.29
