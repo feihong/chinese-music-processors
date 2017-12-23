@@ -6,17 +6,20 @@ These are scripts to help you process metadata for music files downloaded from [
 
 ### Mac
 
-`brew install mp3gain aacgain atomicparsley`
-
-`brew install ffmpeg --with-fdk-aac`
+```
+brew install mp3gain aacgain atomicparsley wget
+brew install ffmpeg --with-fdk-aac
+```
 
 ### Linux
 
 Install dependencies on Ubuntu:
 
-`apt-get install xclip ffmpeg atomicparsley mp3gain aacgain`
+```
+apt-get install xclip ffmpeg atomicparsley mp3gain aacgain
+```
 
-If you are on 16.04, you may need to download binaries for mp3gain and aacgain. In addition, you'll need to build ffmpeg yourself.
+If you are on 16.04, you may need to download binaries for mp3gain and aacgain. In addition, you'll need to build ffmpeg yourself since version you get from apt-get doesn't include some AAC-related features.
 
 - [mp3gain](https://pkgs.org/ubuntu-14.04/ubuntu-universe-amd64/mp3gain_1.5.2-r2-6_amd64.deb.html)
 - [aacgain](https://launchpad.net/~stefanobalocco/+archive/ubuntu/ppa/+packages)
@@ -24,46 +27,59 @@ If you are on 16.04, you may need to download binaries for mp3gain and aacgain. 
 
 ### Python
 
-If you don't already have it, install virtualenvwrapper:
+If you don't already have it, install pipenv:
 
-`pip install virtualenvwrapper`
+`pip3 install pipenv`
 
 Now you can install the Python scripts:
 
 ```
 git clone https://github.com/feihong/chinese-music-processors
 cd chinese-music-processors
-mkvirtualenv -p python3 music
-pip install -r requirements.txt
+pipenv --python python3 install
 ```
 
 ### Browser
 
-Install the following Firefox addons and user script:
+In Firefox, you need to install the Douban Music Metadata add-on:
 
-- [Greasemonkey](https://addons.mozilla.org/en-us/firefox/addon/greasemonkey/)
-- Greasemonkey [Douban music user script](https://raw.githubusercontent.com/feihong/chinese-music-processors/master/douban_song_metadata.user.js) from this repo
-- [Download Youtube Videos as MP4](https://addons.mozilla.org/en-us/firefox/addon/download-youtube/)
-- [Cache Download](https://addons.mozilla.org/en-us/firefox/addon/cachedownload/)
-
-Configure Cache Download like so:
-
-![](https://raw.githubusercontent.com/feihong/chinese-music-processors/master/images/cache_download_rule_mp3.png)
-
-- Filename expression: `%filename%.%ext%`
-- Regular expression to match files: `.*doubanio\.com.*\.mp3`
-
-![](https://raw.githubusercontent.com/feihong/chinese-music-processors/master/images/cache_download_rule_jpg.png)
-
-- Filename expression: `%filename%.%ext%`
-- Regular expression to match files: `.*doubanio\.com.*large.*jpg`
+- Visit the [Debugging Page](about:debugging)
+- Check `Enable add-on debugging`
+- Click on `Load Temporary Add-on`
+- Navigate to the project directory, select `webextension/manifest.json`
 
 ## Usage
 
-Process .mp3 files downloaded from Douban Music  to `douban_songs`:
+### 豆瓣音乐 (Douban Music)
 
-`inv douban`
+#### Download songs
 
-Process .mp4 files downloaded from YouTube to `youtube_songs`:
+- Visit [豆瓣音乐](https://music.douban.com/), and then click on an artist page, e.g. [放肆的肆](https://site.douban.com/wpoxs/)
+- Click on the "play" or "add" button next to song titles to add songs to the [Music Player](https://music.douban.com/artists/player/)
+- Click on the Douban Music Metadata icon in your toolbar and select `Automatically download files`
+- Songs that you play in the player will automatically download to `~/Downloads/douban-songs`
+- Once all songs have been downloaded, click on add-on icon and select `Show metadata`
+- A small metadata section will appear at the top of the page
+- Click `Copy to clipboard`
+- Create a file called `input.json` in project directory and paste the metadata into it
+- In terminal, navigate to project directory and run
 
-`inv youtube`
+  ```
+  pipenv shell
+  inv douban
+  ```
+
+### YouTube
+
+```
+pipenv shell
+inv youtube
+```
+
+TBD
+
+## References
+
+- https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu#RevertingChangesMadebyThisGuide
+- https://trac.ffmpeg.org/wiki/CompilationGuide/MacOSX
+- https://trac.ffmpeg.org/wiki/Encode/AAC

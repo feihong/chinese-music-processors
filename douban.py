@@ -1,17 +1,6 @@
 """
 Process MP3 files downloaded from Douban music.
 
-Dependencies:
-- Commands: xclip, ffmpeg, mp3gain, atomicparsley
-- Python modules: mutagen
-
-Sources:
-https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu#RevertingChangesMadebyThisGuide
-https://trac.ffmpeg.org/wiki/CompilationGuide/MacOSX
-https://trac.ffmpeg.org/wiki/Encode/AAC
-https://pypi.python.org/pypi/pyaml/
-https://wiki.python.org/moin/EscapingHtml
-
 """
 import sys
 import json
@@ -20,7 +9,7 @@ import pprint
 from pathlib import Path
 import html
 
-import yaml
+# import yaml
 from mutagen.id3 import ID3, ID3NoHeaderError
 
 
