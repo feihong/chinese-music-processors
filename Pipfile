@@ -9,7 +9,7 @@ name = "pypi"
 
 invoke = "*"
 mutagen = "*"
-youtube_dl = "*"
+"youtube-dl" = "*"
 
 
 [dev-packages]

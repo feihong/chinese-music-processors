@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "c4395ffddda4e9e5f8586520051d5fd0a50872f29ab1dedbd11f9fa937f146a3"
+            "sha256": "a1313119a8a8513fab4dda9467b465142e5f977844782b99f2b8a0ce1f7a4fca"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -43,10 +43,10 @@
         },
         "youtube-dl": {
             "hashes": [
-                "sha256:9a403942fa16cfa0751eea304c0dd36873535c06f0b3c8c1c280e708f9ee1413",
-                "sha256:1036004755d3b36bede41df806ef111c74504da3242bc9c7f417b39346e2c7c4"
+                "sha256:0378735ed90581e52884c4f9fcfd258f226f998f8ea1aca843c82fcb11549d9b",
+                "sha256:9c77afa1136de1f6b771b1d18d72d46954d340e2cdca125792fb25de72a6aad3"
             ],
-            "version": "==2017.12.2"
+            "version": "==2017.12.31"
         }
     },
     "develop": {}

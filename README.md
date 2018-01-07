@@ -39,6 +39,12 @@ cd chinese-music-processors
 pipenv --python python3 install
 ```
 
+Upgrade `youtube-dl` to latest version:
+
+```
+pipenv install youtube-dl
+```
+
 ### Browser
 
 In Firefox, you need to install the Douban Music Metadata add-on:
