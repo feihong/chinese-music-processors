@@ -5,14 +5,14 @@
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
-            "implementation_version": "3.6.1",
+            "implementation_version": "3.6.4",
             "os_name": "posix",
             "platform_machine": "x86_64",
             "platform_python_implementation": "CPython",
             "platform_release": "17.3.0",
             "platform_system": "Darwin",
             "platform_version": "Darwin Kernel Version 17.3.0: Thu Nov  9 18:09:22 PST 2017; root:xnu-4570.31.3~1/RELEASE_X86_64",
-            "python_full_version": "3.6.1",
+            "python_full_version": "3.6.4",
             "python_version": "3.6",
             "sys_platform": "darwin"
         },
@@ -43,10 +43,10 @@
         },
         "youtube-dl": {
             "hashes": [
-                "sha256:0378735ed90581e52884c4f9fcfd258f226f998f8ea1aca843c82fcb11549d9b",
-                "sha256:9c77afa1136de1f6b771b1d18d72d46954d340e2cdca125792fb25de72a6aad3"
+                "sha256:6fe61fd319917f7beab87ea453df1b90c4a5638f166af162b79bdd8cd63091ea",
+                "sha256:f5fe51b868a5b5a2adbcfe574b8a3f26be38ebaabdd7e74b3cf9301e6d83babc"
             ],
-            "version": "==2017.12.31"
+            "version": "==2018.1.21"
         }
     },
     "develop": {}
