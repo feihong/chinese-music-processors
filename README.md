@@ -27,22 +27,17 @@ If you are on 16.04, you may need to download binaries for mp3gain and aacgain. 
 
 ### Python
 
-If you don't already have it, install pipenv:
+If you don't already have it, install virtualenvwrapper and pipenv:
 
-`pip3 install pipenv`
+`pip3 install virtualenvwrapper pipenv`
 
 Now you can install the Python scripts:
 
 ```
 git clone https://github.com/feihong/chinese-music-processors
 cd chinese-music-processors
-pipenv --python python3 install
-```
-
-Upgrade `youtube-dl` to latest version:
-
-```
-pipenv install youtube-dl
+mkvirtualenv -p python3 music
+pipenv install
 ```
 
 ### Browser
@@ -71,18 +66,19 @@ In Firefox, you need to install the Douban Music Metadata add-on:
 - In terminal, navigate to project directory and run
 
   ```
-  pipenv shell
+  workon music
   inv douban
   ```
 
 ### YouTube
 
+Create `input.txt` file that contains metadata for the music videos you want to download from YouTube. Then run:
+
 ```
-pipenv shell
+workon music
+pipenv install youtube-dl  # upgrade to latest version
 inv youtube
 ```
-
-TBD
 
 ## References
 
