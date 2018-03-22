@@ -43,10 +43,10 @@
         },
         "youtube-dl": {
             "hashes": [
-                "sha256:fa13bebaabacbe76e002619f11737cdd746bd3903ec71a8aedc0f5620228c5a6",
-                "sha256:6a9ea1e21f3d492604d140a8feb40af5870500e4dc7e54e2593eb06d21f84263"
+                "sha256:ab19b7750f0e3d28cc896f254385ed953f32db27aa01928e2be0520d5e4c8563",
+                "sha256:8c93a2ef7f3c79a20da45effcc1458d186d8b23d8fe42f09b305eed8f865f038"
             ],
-            "version": "==2018.1.27"
+            "version": "==2018.3.20"
         }
     },
     "develop": {}

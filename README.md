@@ -65,10 +65,10 @@ In Firefox, you need to install the Douban Music Metadata add-on:
 - Create a file called `input.json` in project directory and paste the metadata into it
 - In terminal, navigate to project directory and run
 
-  ```
-  workon music
-  inv douban
-  ```
+```
+workon music
+inv douban
+```
 
 ### YouTube
 
