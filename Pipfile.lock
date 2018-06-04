@@ -9,9 +9,9 @@
             "os_name": "posix",
             "platform_machine": "x86_64",
             "platform_python_implementation": "CPython",
-            "platform_release": "17.4.0",
+            "platform_release": "17.5.0",
             "platform_system": "Darwin",
-            "platform_version": "Darwin Kernel Version 17.4.0: Sun Dec 17 09:19:54 PST 2017; root:xnu-4570.41.2~1/RELEASE_X86_64",
+            "platform_version": "Darwin Kernel Version 17.5.0: Fri Apr 13 19:32:32 PDT 2018; root:xnu-4570.51.2~1/RELEASE_X86_64",
             "python_full_version": "3.6.4",
             "python_version": "3.6",
             "sys_platform": "darwin"
@@ -29,11 +29,11 @@
     "default": {
         "invoke": {
             "hashes": [
-                "sha256:357f0661c1d84f9f113e6164705d92eb00b35cd704c31e82efbf0f012f25e40c",
-                "sha256:39020b07218c87747e85dd422510f02a8d1282c71952942324c67d9eeaae8e62",
-                "sha256:621181a0efae67b3dadec583cf2c6b5096136635bf6a326c481c73db412b36fc"
+                "sha256:621b6564f992c37166e16090d7e7cccb3b922e03a58e980dfa5e543a931b652f",
+                "sha256:4a4cc031db311cbfb3fdd8ec93a06c892533c27b931f4be14b24c97cd042b14e",
+                "sha256:21274204515dca62206470b088bbcf9d41ffda82b3715b90e01d71b7a4681921"
             ],
-            "version": "==0.22.1"
+            "version": "==1.0.0"
         },
         "mutagen": {
             "hashes": [
@@ -43,10 +43,10 @@
         },
         "youtube-dl": {
             "hashes": [
-                "sha256:4eec79c9c5825874dc5b66f5f8665cdab493b4147ee1056ac1594642cd44c709",
-                "sha256:7a32100ed991efd58dd1b2ade5a569625644719669731ea294595e08a2d2ad8e"
+                "sha256:aa8b11b17e2b85dd2714a81180146381ea951cda11b3e4e38903a7861b82ff2f",
+                "sha256:3f476e40e521979521748138e86ee33a5ee743b5abb4e449265b3ba312e1d962"
             ],
-            "version": "==2018.4.9"
+            "version": "==2018.6.4"
         }
     },
     "develop": {}

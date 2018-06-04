@@ -7,9 +7,10 @@ For all the .mp4 files in a given directory, do the following:
 
 ---
 
-Each input file should use the following format for their filename:
+Each input file should use one of the two following formats for their filename:
 
-ALBUM  ARTIST  TITLE
+ALBUM  ARTIST  TITLE  URL
+ARTIST  TITLE  URL
 
 Note that there are two spaces between each element.
 
@@ -60,13 +61,18 @@ def get_songs(input_file):
         for line in fp:
             line = line.strip()
             if line:
+                print(line)
                 args = line.split('  ')
-                yield Song(*args)
+                if len(args) == 4:
+                    yield Song(*args)
+                else:
+                    args_ = [None] + args
+                    yield Song(*args_)
 
 
 class Song:
     def __init__(self, album, artist, title, url):
-        self.album = album
+        self.album = album      # might be None
         self.artist = artist
         self.title = title
         self.url = url
@@ -100,8 +106,9 @@ def add_metadata(song):
         str(song.output_file),
         '--title', song.title,
         '--artist', song.artist,
-        '--album', song.album,
         '--comment', song.url,
-        '--overWrite',
     ]
+    if song.album is not None:
+        cmd.extend(['--album', song.album])
+    cmd.append('--overWrite')
     subprocess.call(cmd)
