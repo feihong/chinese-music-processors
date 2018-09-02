@@ -41,7 +41,7 @@ http://archive09.linux.com/feature/59957
 http://ubuntuforums.org/showthread.php?t=2194537
 
 """
-
+import json
 import sys
 import subprocess
 import shutil
@@ -76,18 +76,22 @@ class Song:
         self.artist = artist
         self.title = title
         self.url = url
-        self.output_file = Path('youtube_songs') / '{}  {}.m4a'.format(artist, title)
+        self.output_file = Path('youtube_songs') / f'{artist}  {title}.m4a'
+        self.json_file = self.output_file.with_suffix('.info.json')
 
 
 def download_song(song):
     cmd = [
         'youtube-dl',
         '--embed-thumbnail',
+        '--write-info-json',
         '--format', 'bestaudio[ext=m4a]',
         '--output', song.output_file,
         song.url
     ]
     subprocess.call(cmd)
+    meta = json.loads(song.json_file.read_bytes())
+    song.lyrics = meta['description']
 
 
 def adjust_gain(song):
@@ -107,6 +111,7 @@ def add_metadata(song):
         '--title', song.title,
         '--artist', song.artist,
         '--comment', song.url,
+        '--lyrics', song.lyrics,
     ]
     if song.album is not None:
         cmd.extend(['--album', song.album])
