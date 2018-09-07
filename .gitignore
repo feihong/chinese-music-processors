@@ -11,6 +11,8 @@ __pycache__/
 *.mp4
 *.m4a
 *.json
+*.vtt
+*.lyrics
 
 input.txt
 input.json

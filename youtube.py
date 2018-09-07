@@ -5,40 +5,12 @@ For all the .mp4 files in a given directory, do the following:
 - Adjust gain.
 - Add metadata (title, artist, album, artwork).
 
----
-
 Each input file should use one of the two following formats for their filename:
 
 ALBUM  ARTIST  TITLE  URL
 ARTIST  TITLE  URL
 
 Note that there are two spaces between each element.
-
----
-
-In order to run this script, you must have ffmpeg, aacgain, and AtomicParsley
-installed.
-
-On Ubuntu:
-
-apt-get install ffmpeg
-add-apt-repository ppa:stefanobalocco/ppa
-apt-get update
-apt-get install aacgain
-apt-get install atomicparsley
-
-On Mac:
-
-brew install ffmpeg
-brew install aacgain
-brew install atomicparsley
-
----
-
-Sources:
-http://www.linuxquestions.org/questions/linux-software-2/best-way-to-extract-aac-from-mp4-losslessly-852936/
-http://archive09.linux.com/feature/59957
-http://ubuntuforums.org/showthread.php?t=2194537
 
 """
 import json
@@ -47,6 +19,7 @@ import subprocess
 import shutil
 import tempfile
 from pathlib import Path
+import webvtt
 
 
 def process(input_file):
@@ -78,6 +51,8 @@ class Song:
         self.url = url
         self.output_file = Path('youtube_songs') / f'{artist}  {title}.m4a'
         self.json_file = self.output_file.with_suffix('.info.json')
+        self.subtitle_file = self.output_file.with_suffix('.zh-Hans.vtt')
+        self.lyrics_file = self.output_file.with_suffix('.lyrics')
 
 
 def download_song(song):
@@ -85,13 +60,19 @@ def download_song(song):
         'youtube-dl',
         '--embed-thumbnail',
         '--write-info-json',
+        '--all-subs',
         '--format', 'bestaudio[ext=m4a]',
         '--output', song.output_file,
         song.url
     ]
     subprocess.call(cmd)
+
     meta = json.loads(song.json_file.read_bytes())
     song.lyrics = meta['description']
+    if song.subtitle_file.exists():
+        subs = webvtt.read(song.subtitle_file)
+        song.lyrics += '\n\n=====\n\n' + '\n'.join(c.text for c in subs.captions)
+    song.lyrics_file.write_text(song.lyrics)
 
 
 def adjust_gain(song):
@@ -111,9 +92,21 @@ def add_metadata(song):
         '--title', song.title,
         '--artist', song.artist,
         '--comment', song.url,
-        '--lyrics', song.lyrics,
     ]
     if song.album is not None:
         cmd.extend(['--album', song.album])
     cmd.append('--overWrite')
     subprocess.call(cmd)
+
+    # Now add the lyrics. This step can sometimes fail for mysterious reasons,
+    # which is why we save it for last.
+    cmd = [
+        'AtomicParsley',
+        str(song.output_file),
+        '--lyrics', song.lyrics,
+        '--overWrite',
+    ]
+    retcode = subprocess.call(cmd)
+    if retcode != 0:
+        # print(' '.join(cmd))
+        print(f'AtomicParsley failed to add lyrics to file {song.output_file}')

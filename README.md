@@ -25,6 +25,11 @@ If you are on 16.04, you may need to download binaries for mp3gain and aacgain. 
 - [aacgain](https://launchpad.net/~stefanobalocco/+archive/ubuntu/ppa/+packages)
 - [ffmpeg](https://github.com/feihong/feihong-setup/blob/master/ubuntu/compile_ffmpeg.sh)
 
+Sources:
+- http://www.linuxquestions.org/questions/linux-software-2/best-way-to-extract-aac-from-mp4-losslessly-852936/
+- http://archive09.linux.com/feature/59957
+- http://ubuntuforums.org/showthread.php?t=2194537
+
 ### Python
 
 If you don't already have it, install virtualenvwrapper and pipenv:
