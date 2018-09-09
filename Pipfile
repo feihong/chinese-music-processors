@@ -8,5 +8,6 @@ invoke = "*"
 mutagen = "*"
 "youtube-dl" = "*"
 webvtt-py = "*"
+"jinja2" = "*"
 
 [dev-packages]

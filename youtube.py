@@ -19,14 +19,20 @@ import subprocess
 import shutil
 import tempfile
 from pathlib import Path
+import webbrowser
 import webvtt
+from jinja2 import Template
 
 
 def process(input_file):
-    for song in get_songs(input_file):
+    songs = list(get_songs(input_file))
+    for song in songs:
         download_song(song)
         adjust_gain(song)
         add_metadata(song)
+
+    report_file = generate_report(songs)
+    webbrowser.open(str(report_file))
 
 
 def get_songs(input_file):
@@ -34,7 +40,6 @@ def get_songs(input_file):
         for line in fp:
             line = line.strip()
             if line:
-                print(line)
                 args = line.split('  ')
                 if len(args) == 4:
                     yield Song(*args)
@@ -49,29 +54,55 @@ class Song:
         self.artist = artist
         self.title = title
         self.url = url
+        self.lyrics = ''
         self.output_file = Path('youtube_songs') / f'{artist}  {title}.m4a'
-        self.json_file = self.output_file.with_suffix('.info.json')
-        self.subtitle_file = self.output_file.with_suffix('.zh-Hans.vtt')
+        self.info_file = self.output_file.with_suffix('.info.json')
         self.lyrics_file = self.output_file.with_suffix('.lyrics')
+
+    @property
+    def extracted_lyrics(self):
+        cmd = [
+            'ffprobe',
+            '-v', 'quiet',
+            '-print_format', 'json',
+            '-show_format',
+            str(self.output_file),
+        ]
+        output = subprocess.check_output(cmd)
+        meta = json.loads(output)
+        try:
+            return meta['format']['tags']['lyrics']
+        except:
+            return None
 
 
 def download_song(song):
-    cmd = [
-        'youtube-dl',
-        '--embed-thumbnail',
-        '--write-info-json',
-        '--all-subs',
-        '--format', 'bestaudio[ext=m4a]',
-        '--output', song.output_file,
-        song.url
-    ]
-    subprocess.call(cmd)
+    if not song.output_file.exists():
+        cmd = [
+            'youtube-dl',
+            '--embed-thumbnail',
+            '--write-info-json',
+            '--all-subs',
+            '--format', 'bestaudio[ext=m4a]',
+            '--output', song.output_file,
+            song.url
+        ]
+        subprocess.call(cmd)
 
-    meta = json.loads(song.json_file.read_bytes())
-    song.lyrics = meta['description']
-    if song.subtitle_file.exists():
-        subs = webvtt.read(song.subtitle_file)
-        song.lyrics += '\n\n=====\n\n' + '\n'.join(c.text for c in subs.captions)
+    # Get lyrics from video description.
+    info = json.loads(song.info_file.read_bytes())
+    lyrics_list = [info['description']]
+
+    # Get lyrics from subtitles, if any.
+    for ext in ['.zh-Hans.vtt', '.zh-Hant.vtt', '.zh-TW.vtt']:
+        caption_file = song.output_file.with_suffix(ext)
+        if caption_file.exists():
+            vtt = webvtt.read(caption_file)
+            lyrics = '\n'.join(c.text for c in vtt.captions)
+            lyrics_list.append(lyrics)
+            break
+
+    song.lyrics = '\n\n=====\n\n'.join(lyrics_list)
     song.lyrics_file.write_text(song.lyrics)
 
 
@@ -92,6 +123,7 @@ def add_metadata(song):
         '--title', song.title,
         '--artist', song.artist,
         '--comment', song.url,
+        '--genre', '流行 Pop',    # just a default
     ]
     if song.album is not None:
         cmd.extend(['--album', song.album])
@@ -103,10 +135,50 @@ def add_metadata(song):
     cmd = [
         'AtomicParsley',
         str(song.output_file),
-        '--lyrics', song.lyrics,
+        '--lyricsFile', str(song.lyrics_file),
         '--overWrite',
     ]
-    retcode = subprocess.call(cmd)
-    if retcode != 0:
-        # print(' '.join(cmd))
-        print(f'AtomicParsley failed to add lyrics to file {song.output_file}')
+    subprocess.call(cmd)
+
+template = Template("""\
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+  <meta charset="utf-8">
+  <title>YouTube Processing Report</title>
+  <style>
+  textarea { display: none }
+  .lyrics {
+    border: 1px dashed gray;
+    white-space: pre-line;
+  }
+  </style>
+</head>
+<body>
+{% for song in songs %}
+  <p>
+    {{ song.output_file }}
+    <a href="{{ song.url }}" target="_blank">link</a>
+    {% if song.extracted_lyrics == None %}
+      <div>
+        No lyrics found in output file!
+      </div>
+    {% endif %}
+    <div class="lyrics">{{ song.lyrics }}</div>
+  </p>
+{%endfor %}
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script>
+$('button').on('click', evt => {
+  $(evt.target).next('textarea').show()
+})
+</script>
+</body>
+""")
+
+def generate_report(songs):
+    report_file = Path('youtube-report.html')
+    report_file.write_text(
+        template.render(songs=songs)
+    )
+    return report_file
