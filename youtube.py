@@ -146,13 +146,6 @@ template = Template("""\
 <head>
   <meta charset="utf-8">
   <title>YouTube Processing Report</title>
-  <style>
-  textarea { display: none }
-  .lyrics {
-    border: 1px dashed gray;
-    white-space: pre-line;
-  }
-  </style>
 </head>
 <body>
 {% for song in songs %}
@@ -164,15 +157,9 @@ template = Template("""\
         No lyrics found in output file!
       </div>
     {% endif %}
-    <div class="lyrics">{{ song.lyrics }}</div>
+    <textarea>{{ song.lyrics }}</textarea>
   </p>
 {%endfor %}
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script>
-$('button').on('click', evt => {
-  $(evt.target).next('textarea').show()
-})
-</script>
 </body>
 """)
 
