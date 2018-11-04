@@ -22,12 +22,12 @@
         },
         "invoke": {
             "hashes": [
-                "sha256:1c2cf54c9b9af973ad9704d8ba81b225117cab612568cacbfb3fc42958cc20a9",
-                "sha256:334495ea16e73948894e9535019f87a88a44b73e7977492b12c2d1b5085f8197",
-                "sha256:54bdd3fd0245abd1185e05359fd2e4f26be0657cfe7d7bb1bed735e054fa53ab"
+                "sha256:4f4de934b15c2276caa4fbc5a3b8a61c0eb0b234f2be1780d2b793321995c2d6",
+                "sha256:dc492f8f17a0746e92081aec3f86ae0b4750bf41607ea2ad87e5a7b5705121b7",
+                "sha256:eb6f9262d4d25b40330fb21d1e99bf0f85011ccc3526980f8a3eaedd4b43892e"
             ],
             "index": "pypi",
-            "version": "==1.1.1"
+            "version": "==1.2.0"
         },
         "jinja2": {
             "hashes": [
@@ -59,11 +59,11 @@
         },
         "youtube-dl": {
             "hashes": [
-                "sha256:42c2e82280c943ce618969c3ceeea56666554f311e86a8082c72ec91a63885a9",
-                "sha256:fc7d1c9e69c44cdf3b11b056d382502e1851bdcd900ff0ced61b6c65d2e4098c"
+                "sha256:14ad7e55f325a9352a565913506dbf19f13ec64cec3689f8881a9a44e183ea09",
+                "sha256:726399202f1798cfd51571e99e319332050addf69d7ee98b53bb5ad66b6f916f"
             ],
             "index": "pypi",
-            "version": "==2018.9.8"
+            "version": "==2018.11.3"
         }
     },
     "develop": {}

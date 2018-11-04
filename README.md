@@ -81,7 +81,7 @@ Create `input.txt` file that contains metadata for the music videos you want to 
 
 ```
 workon music
-pipenv install youtube-dl  # upgrade to latest version
+pipenv update youtube-dl  # upgrade to latest version
 inv youtube
 ```
 
