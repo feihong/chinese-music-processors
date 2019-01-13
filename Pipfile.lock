@@ -73,10 +73,10 @@
         },
         "mutagen": {
             "hashes": [
-                "sha256:2ea9c900a05fa7f5f4c5bd9fc1475d7d576532e13b2f79b694452b997ff67200"
+                "sha256:bb61e2456f59a9a4a259fbc08def6d01ba45a42da8eeaa97d00633b0ec5de71c"
             ],
             "index": "pypi",
-            "version": "==1.41.1"
+            "version": "==1.42.0"
         },
         "webvtt-py": {
             "hashes": [
@@ -87,11 +87,11 @@
         },
         "youtube-dl": {
             "hashes": [
-                "sha256:57d18b306433e0dade76b1838aff525cf2bd588ce1123d78ae8f7cdeb90923b0",
-                "sha256:93935eeff5ad48d0c385002c2b6e601d051957a8864631a70dcba51af12bf46a"
+                "sha256:785664b2e090f82cc4edbcca36f0bc84efc25ebbe77a84fff72a24bf5aae69c0",
+                "sha256:a4c0fd832a4efd75164349bc5c4fcf40bf3da58fe596d8fd1e2e0da60bb96aa8"
             ],
             "index": "pypi",
-            "version": "==2018.12.17"
+            "version": "==2019.1.10"
         }
     },
     "develop": {}
