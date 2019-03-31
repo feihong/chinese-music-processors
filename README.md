@@ -83,6 +83,7 @@ Create `input.txt` file that contains metadata for the music videos you want to 
 workon music
 pipenv update youtube-dl  # upgrade to latest version
 inv youtube
+open youtube-report.html  # see which files didn't get lyrics put into them
 ```
 
 ## References
