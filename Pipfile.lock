@@ -31,11 +31,11 @@
         },
         "jinja2": {
             "hashes": [
-                "sha256:74c935a1b8bb9a3947c50a54766a969d4846290e1e788ea44c1392163723c3bd",
-                "sha256:f84be1bb0040caca4cea721fcbbbbd61f9be9464ca236387158b0feea01914a4"
+                "sha256:065c4f02ebe7f7cf559e49ee5a95fb800a9e4528727aec6f24402a5374c65013",
+                "sha256:14dd6caf1527abb21f08f86c784eac40853ba93edb79552aa1e4b8aef1b61c7b"
             ],
             "index": "pypi",
-            "version": "==2.10"
+            "version": "==2.10.1"
         },
         "markupsafe": {
             "hashes": [
@@ -87,11 +87,11 @@
         },
         "youtube-dl": {
             "hashes": [
-                "sha256:22657f4ab3b923ee4039a6d9b58d7d4ac215aa099b85c347fcf28e3f9ede0b56",
-                "sha256:d332e1c8c064231315e772d7231fb8a715e9f5129e10e8764571bdc892b8d87a"
+                "sha256:0d25459093870bf560bccafe9015e59402d7de1b2c956593623ba4c2840153e5",
+                "sha256:ea0824ae9a166059ec754c267480198a074bd899c20b2ba497809bac099cde2e"
             ],
             "index": "pypi",
-            "version": "==2019.3.18"
+            "version": "==2019.4.17"
         }
     },
     "develop": {}
