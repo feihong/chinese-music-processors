@@ -6,8 +6,8 @@ name = "pypi"
 [packages]
 invoke = "*"
 mutagen = "*"
-"youtube-dl" = "*"
 webvtt-py = "*"
 "jinja2" = "*"
+youtube-dl = "*"
 
 [dev-packages]
