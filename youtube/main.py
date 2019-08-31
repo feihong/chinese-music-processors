@@ -11,16 +11,16 @@ import subprocess
 from pathlib import Path
 import csv
 
-# import webvtt  # currently not used
+import webvtt
 
 import settings
 
 here = Path(__file__).parent
 
-download_dir = Path(here) / 'downloads'
-output_dir = Path(here) / 'output'
-csv_file = Path(here) / 'youtube.csv'
-rewrite_csv_file = Path(here) / 'youtube-rewrite.csv'
+download_dir = here / 'downloads'
+output_dir = here / 'output'
+csv_file = here / 'youtube.csv'
+rewrite_csv_file = here / 'youtube-rewrite.csv'
 
 
 def main():
@@ -43,7 +43,7 @@ def download_songs():
     ]
     subprocess.call(cmd)
 
-    print(f'Files downloaded in {download_dir')
+    print(f'Files downloaded in {download_dir}')
 
 
 def generate_csv():
@@ -83,19 +83,30 @@ def add_metadata():
 
 
 def add_metadata_for_file(input_file, output_file, meta, info):
-  # todo: add subtitles to lyrics as well?
+  lyrics_lst = [info['description']]
+  # Get lyrics from subtitles, if any.
+  for ext in ['.zh-Hans.vtt', '.zh-Hant.vtt', '.zh-TW.vtt']:
+    caption_file = input_file.with_suffix(ext)
+    if caption_file.exists():
+        vtt = webvtt.read(caption_file)
+        text = '\n'.join(c.text for c in vtt.captions)
+        lyrics_lst.append(text)
+        break  # process at most one caption file
+
+  lyrics = '\n\n=====\n\n'.join(lyrics_lst)
 
   cmd = [
     'ffmpeg',
     '-y',
     '-i', str(input_file),
+    '-acodec', 'copy',  # copy audio without additional processing
+    '-vn',              # ignore video
+    '-metadata', 'genre=流行 Pop',  # just a placeholder
     '-metadata', f"title={meta['title']}",
     '-metadata', f"artist={meta['artist']}",
     '-metadata', f"album={meta['album']}",
     '-metadata', f"comment={meta['url']}",
-    '-metadata', f"lyrics={info['description']}",
-    '-metadata', 'genre=流行 Pop',  # just a placeholder
-    '-vn',
+    '-metadata', f"lyrics={lyrics}",
     str(output_file)
   ]
   subprocess.call(cmd)
