@@ -4,17 +4,9 @@ __pycache__/
 *$py.class
 
 .DS_Store
-/youtube-downloads/*.jpg
-/youtube-downloads/*.m4a
-/youtube-downloads/*.json
-/youtube-downloads/*.vtt
 
 # douban
 input.json
-
-# youtube
-youtube.csv
-youtube-rewrite.csv
 
 # configuration
 settings.py

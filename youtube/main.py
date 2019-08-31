@@ -15,13 +15,15 @@ import csv
 
 import settings
 
+here = Path(__file__).parent
 
-download_dir = Path('youtube-downloads')
-output_dir = Path('youtube-output')
-csv_file = Path(__file__).parent / 'youtube.csv'
-rewrite_csv_file = Path(__file__).parent / 'youtube-rewrite.csv'
+download_dir = Path(here) / 'downloads'
+output_dir = Path(here) / 'output'
+csv_file = Path(here) / 'youtube.csv'
+rewrite_csv_file = Path(here) / 'youtube-rewrite.csv'
 
-def process(input_file):
+
+def main():
   download_songs()
   generate_csv()
   add_metadata()
@@ -36,7 +38,7 @@ def download_songs():
         '--write-info-json',
         '--all-subs',
         '--format', 'bestaudio[ext=m4a]',
-        '--output', 'youtube-downloads/%(title)s-%(id)s.%(ext)s',
+        '--output', f'{download_dir}/%(title)s-%(id)s.%(ext)s',
         settings.YOUTUBE_PLAYLIST,
     ]
     subprocess.call(cmd)
@@ -56,10 +58,13 @@ def generate_csv():
         f"https://youtu.be/{info['id']}"
       ])
 
-  print('Generated youtube.csv, edit it, and save to youtube-rewrite.csv!')
+  print('\nGenerated youtube.csv, edit it, and save to youtube-rewrite.csv!')
 
 
 def add_metadata():
+  if not rewrite_csv_file.exists():
+    return
+
   rewrite_meta = {}
   with rewrite_csv_file.open() as fp:
     reader = csv.DictReader(fp)
@@ -84,6 +89,7 @@ def add_metadata_for_file(input_file, output_file, meta, info):
     '-i', str(input_file),
     '-metadata', f"title={meta['title']}",
     '-metadata', f"artist={meta['artist']}",
+    '-metadata', f"album={meta['album']}",
     '-metadata', f"comment={meta['url']}",
     '-metadata', f"lyrics={info['description']}",
     '-metadata', 'genre=流行 Pop',  # just a placeholder
@@ -109,9 +115,13 @@ def add_metadata_for_file(input_file, output_file, meta, info):
   ]
   subprocess.call(cmd)
 
-  print(output_file)
+  print(f'Output files generated in {output_file}')
 
 
 def get_info_objects():
   for info_file in download_dir.glob('*.info.json'):
     yield json.loads(info_file.read_text())
+
+
+if __name__ == '__main__':
+  main()

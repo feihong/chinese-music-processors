@@ -1,0 +1,9 @@
+/downloads/*.jpg
+/downloads/*.m4a
+/downloads/*.json
+/downloads/*.vtt
+
+/output/*.m4a
+
+youtube.csv
+youtube-rewrite.csv
