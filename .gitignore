@@ -12,8 +12,14 @@ __pycache__/
 *.m4a
 *.json
 *.vtt
-*.lyrics
 
-input.txt
+# douban
 input.json
-youtube-report.html
+
+# youtube
+youtube.csv
+youtube-rewrite.csv
+
+# configuration
+settings.py
+

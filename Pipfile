@@ -11,3 +11,7 @@ webvtt-py = "*"
 youtube-dl = "*"
 
 [dev-packages]
+ipython = "*"
+
+[requires]
+python_version = "3.7"

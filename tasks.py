@@ -12,8 +12,8 @@ def douban(ctx, input_file='input.json'):
 @task
 def youtube(ctx, input_file='input.txt'):
     "Process songs from YouTube"
-    from youtube import process
-    process(input_file)
+    import youtube2
+    youtube2.process(input_file)
 
 
 @task

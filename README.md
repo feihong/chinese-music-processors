@@ -34,14 +34,15 @@ Sources:
 
 If you don't already have it, install virtualenvwrapper and pipenv:
 
-`pip3 install virtualenvwrapper pipenv`
+```
+pip3 install virtualenvwrapper pipenv
+```
 
 Now you can install the Python scripts:
 
 ```
 git clone https://github.com/feihong/chinese-music-processors
 cd chinese-music-processors
-mkvirtualenv -p python3 music
 pipenv install
 ```
 
@@ -55,6 +56,16 @@ In Firefox, you need to install the Douban Music Metadata add-on:
 - Navigate to the project directory, select `webextension/manifest.json`
 
 ## Usage
+
+### YouTube
+
+Create `input.txt` file that contains metadata for the music videos you want to download from YouTube. Then run:
+
+```
+pipenv update youtube-dl  # upgrade to latest version
+inv youtube
+open youtube-report.html  # see which files didn't get lyrics put into them
+```
 
 ### 豆瓣音乐 (Douban Music)
 
@@ -73,17 +84,6 @@ In Firefox, you need to install the Douban Music Metadata add-on:
 ```
 workon music
 inv douban
-```
-
-### YouTube
-
-Create `input.txt` file that contains metadata for the music videos you want to download from YouTube. Then run:
-
-```
-workon music
-pipenv update youtube-dl  # upgrade to latest version
-inv youtube
-open youtube-report.html  # see which files didn't get lyrics put into them
 ```
 
 ## References
