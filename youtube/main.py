@@ -43,6 +43,8 @@ def download_songs():
     ]
     subprocess.call(cmd)
 
+    print(f'Files downloaded in {download_dir')
+
 
 def generate_csv():
   with csv_file.open('w') as fp:
@@ -115,7 +117,7 @@ def add_metadata_for_file(input_file, output_file, meta, info):
   ]
   subprocess.call(cmd)
 
-  print(f'Output files generated in {output_file}')
+  print(f'\nOutput files generated in {output_file}')
 
 
 def get_info_objects():
