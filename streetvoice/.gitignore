@@ -1,0 +1,17 @@
+.DS_Store
+__pycache__
+/node_modules/
+
+# input
+dumpfile
+dumpfile.db
+/assets/*.jpeg
+/assets/*.webp
+/assets/*.png
+/assets/*.ts
+/assets/*.json
+/assets/*.html
+
+# output
+/output/*.m4a
+/cover-art/*.jpeg

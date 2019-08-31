@@ -1,0 +1,22 @@
+{
+  "name": "mitmproxy-quickstart",
+  "version": "1.0.0",
+  "author": "feihong",
+  "license": "MIT",
+  "dependencies": {
+    "better-sqlite3": "^5.4.0",
+    "cheerio": "^1.0.0-rc.3",
+    "npm-run-all": "^4.1.5",
+    "sanitize-filename": "^1.6.1"
+  },
+  "scripts": {
+    "clean": "rm assets/* && rm dumpfile",
+    "start:proxy": "mitmdump -w dumpfile --anticache",
+    "convert-to-sqlite": "mitmdump -ns src/convert_to_sqlite.py -r dumpfile",
+    "generate-metadata": "node src/generate-metadata.js",
+    "generate-files": "node src/generate-files.js",
+    "consolidate": "node src/consolidate.js",
+    "process": "run-s convert-to-sqlite generate-metadata generate-files consolidate",
+    "download-cover-art": "node src/download-cover-art.js"
+  }
+}

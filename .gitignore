@@ -4,14 +4,10 @@ __pycache__/
 *$py.class
 
 .DS_Store
-*.jpg
-*.png
-*.yaml
-*.mp3
-*.mp4
-*.m4a
-*.json
-*.vtt
+/youtube-downloads/*.jpg
+/youtube-downloads/*.m4a
+/youtube-downloads/*.json
+/youtube-downloads/*.vtt
 
 # douban
 input.json
