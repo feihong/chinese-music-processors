@@ -34,7 +34,7 @@ function* getSongs() {
       return {
         id: item.find('.btn-play').data('id'),
         title: item.find('.work-item-info > h4').text().trim(),
-        artist: anchor.text(),
+        artist: anchor.text().trim(),
         url: 'https://streetvoice.com' + anchor.attr('href'),
         imageUrl,
         imageId: imageUrl.match(imageIdRe)[1],
