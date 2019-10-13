@@ -67,23 +67,24 @@ def add_metadata():
   if not rewrite_csv_file.exists():
     return
 
-  rewrite_meta = {}
+  metas = None
   with rewrite_csv_file.open() as fp:
     reader = csv.DictReader(fp)
-    for row in reader:
-      rewrite_meta[row['id']] = row
+    metas = list(reader)
 
-  for info in get_info_objects():
-    id = info['id']
-    input_file = next(download_dir.glob('*-' + id + '.m4a'))
-    meta = rewrite_meta[id]
+  for meta in metas:
+    input_file = next(download_dir.glob(f'*-{meta["id"]}.m4a'))
     output_file = output_dir / f"{meta['artist']}  {meta['title']}.m4a"
 
-    add_metadata_for_file(input_file, output_file, meta, info)
+    add_metadata_for_file(input_file, output_file, meta)
 
 
-def add_metadata_for_file(input_file, output_file, meta, info):
+def add_metadata_for_file(input_file, output_file, meta):
+  info_file = next(download_dir.glob(f'*-{meta["id"]}.info.json'))
+  info = json.loads(info_file.read_text())
+
   lyrics_lst = [info['description']]
+
   # Get lyrics from subtitles, if any.
   for ext in ['.zh-Hans.vtt', '.zh-Hant.vtt', '.zh-TW.vtt']:
     caption_file = input_file.with_suffix(ext)
