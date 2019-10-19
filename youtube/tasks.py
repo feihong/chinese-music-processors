@@ -31,9 +31,10 @@ def playlist(ctx):
 
 
 @task
-def link(ctx):
+def link(ctx, url):
   """
   Process video link
 
   """
   import main
+  main.process_link(url)
