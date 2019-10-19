@@ -23,7 +23,7 @@ csv_file = here / 'youtube.csv'
 rewrite_csv_file = here / 'youtube-rewrite.csv'
 
 
-def main():
+def process_playlist():
   download_songs()
   generate_csv()
   add_metadata()
@@ -49,15 +49,15 @@ def download_songs():
 def generate_csv():
   with csv_file.open('w') as fp:
     writer = csv.writer(fp)
-    writer.writerow(['id', 'title', 'artist', 'album', 'url'])
+    writer.writerow(['title', 'artist', 'album', 'url', 'path'])
 
     for info in get_info_objects():
       writer.writerow([
-        info['id'],
         info['title'],  # title probably needs to be edited
         '',             # artist is filled in by user
         '',             # album is filled in by user
-        f"https://youtu.be/{info['id']}"
+        f"https://youtu.be/{info['id']}",
+        info['path'],
       ])
 
   print('\nGenerated youtube.csv, edit it, and save to youtube-rewrite.csv!')
@@ -73,14 +73,14 @@ def add_metadata():
     metas = list(reader)
 
   for meta in metas:
-    input_file = next(download_dir.glob(f'*-{meta["id"]}.m4a'))
+    input_file = Path(meta['path'])
     output_file = output_dir / f"{meta['artist']}  {meta['title']}.m4a"
 
     add_metadata_for_file(input_file, output_file, meta)
 
 
 def add_metadata_for_file(input_file, output_file, meta):
-  info_file = next(download_dir.glob(f'*-{meta["id"]}.info.json'))
+  info_file = input_file.with_suffix('.info.json')
   info = json.loads(info_file.read_text())
 
   lyrics_lst = [info['description']]
@@ -134,8 +134,7 @@ def add_metadata_for_file(input_file, output_file, meta):
 
 def get_info_objects():
   for info_file in download_dir.glob('*.info.json'):
-    yield json.loads(info_file.read_text())
-
-
-if __name__ == '__main__':
-  main()
+    info = json.loads(info_file.read_text())
+    m4a_file = next(download_dir.glob(f'*-{info["id"]}.m4a'))
+    info['path'] = str(m4a_file)
+    yield info
