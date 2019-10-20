@@ -50,6 +50,7 @@ def download_songs(url):
       '--write-thumbnail',
       '--write-info-json',
       '--all-subs',
+      '--format', '[ext=mp4]',
       '--output', f'{download_dir}/%(title)s-%(id)s.%(ext)s',
       url,
   ]
@@ -154,6 +155,6 @@ def add_metadata_for_file(input_file, output_file, meta):
 def get_info_objects():
   for info_file in download_dir.glob('*.info.json'):
     info = json.loads(info_file.read_text())
-    m4a_file = next(download_dir.glob(f'*-{info["id"]}.m4a'))
-    info['path'] = str(m4a_file)
+    video_file = (info_file.parent / info_file.stem).with_suffix('.mp4')
+    info['path'] = str(video_file)
     yield info
