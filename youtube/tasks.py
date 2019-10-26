@@ -5,6 +5,16 @@ from invoke import task
 
 
 @task
+def update(ctx):
+  """
+  Update youtube-dl
+
+  """
+  cmd = ['pipenv', 'update', 'youtube-dl']
+  subprocess.call(cmd)
+
+
+@task
 def clean(ctx):
   """
   Clean up files
@@ -19,7 +29,7 @@ def clean(ctx):
   rm(main.csv_file)
   rm(main.rewrite_csv_file)
 
-  for file_ in download_dir.iter_dir():
+  for file_ in main.download_dir.iterdir():
     if file_.name != '.gitkeep':
       os.remove(file_)
 
