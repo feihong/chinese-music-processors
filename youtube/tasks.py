@@ -19,6 +19,10 @@ def clean(ctx):
   rm(main.csv_file)
   rm(main.rewrite_csv_file)
 
+  for file_ in download_dir.iter_dir():
+    if file_.name != '.gitkeep':
+      os.remove(file_)
+
 
 @task
 def playlist(ctx):

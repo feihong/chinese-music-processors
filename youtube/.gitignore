@@ -1,7 +1,7 @@
 /downloads/*.jpg
-/downloads/*.m4a
 /downloads/*.json
 /downloads/*.vtt
+/downloads/*.mp4
 
 /output/*.m4a
 
