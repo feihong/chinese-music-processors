@@ -1,6 +1,8 @@
 # Chinese Music Processors
 
-These are scripts to help you process metadata for music files downloaded from [Douban Music](https://music.douban.com/) and Youtube.
+These are scripts to help you process metadata for music files downloaded from YouTube and [StreetVoice](https://streetvoice.com).
+
+[Douban Music](https://music.douban.com/) support is deprecated.
 
 ## Installation
 
@@ -35,7 +37,7 @@ Sources:
 If you don't already have it, install virtualenvwrapper and pipenv:
 
 ```
-pip3 install virtualenvwrapper pipenv
+pip3 install pipenv
 ```
 
 Now you can install the Python scripts:
@@ -46,7 +48,7 @@ cd chinese-music-processors
 pipenv install
 ```
 
-### Browser
+### Browser (deprecated)
 
 In Firefox, you need to install the Douban Music Metadata add-on:
 
@@ -57,17 +59,7 @@ In Firefox, you need to install the Douban Music Metadata add-on:
 
 ## Usage
 
-### YouTube
-
-Create `input.txt` file that contains metadata for the music videos you want to download from YouTube. Then run:
-
-```
-pipenv update youtube-dl  # upgrade to latest version
-inv youtube
-open youtube-report.html  # see which files didn't get lyrics put into them
-```
-
-### 豆瓣音乐 (Douban Music)
+### Douban Music (豆瓣音乐)
 
 #### Download songs
 
@@ -82,7 +74,7 @@ open youtube-report.html  # see which files didn't get lyrics put into them
 - In terminal, navigate to project directory and run
 
 ```
-workon music
+pipenv shell
 inv douban
 ```
 
