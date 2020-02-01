@@ -22,7 +22,7 @@ To proxy https, visit the [magic domain mitm.it](http://mitm.it) and follow the 
 1. To help keep track of progress, click '列表' on the top menu
 1. Don't let display go to sleep
 1. Wait until all tracks have played
-1. Stop proxy
+1. `ctrl+c` to stop proxy
 1. `yarn process`
 1. Generated files will be in `output` folder
 
@@ -39,6 +39,10 @@ Lyrics (json): https://streetvoice.com/api/v3/songs/579453/?only_fields=lyrics,l
 
 Link song id to audio filename (json): https://streetvoice.com/api/v3/songs/579029/hls/
 
-Audio: https://cfhls.streetvoice.com/music/mi/ss/missbac/UFytKaN2SdsVNuToEZmbEk.mp3.hls.mp3-00019.ts
+Single slice of audio: https://cfhls.streetvoice.com/music/mi/ss/missbac/UFytKaN2SdsVNuToEZmbEk.mp3.hls.mp3-00019.ts
 
 Cover art: https://cfstatic.streetvoice.com/song_covers/go/od/goodband/eHuHxnUpXxqEt4j8a7i9Za.jpg?x-oss-process=image/resize,m_fill,h_610,w_610,limit_0/interlace,1/quality,q_85/format,jpg
+
+## Troublshooting
+
+If mitmproxy reports inability to connect to certain servers, then you may need to upgrade it by running `brew upgrade mitmproxy`.
