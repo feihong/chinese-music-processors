@@ -45,4 +45,4 @@ Cover art: https://cfstatic.streetvoice.com/song_covers/go/od/goodband/eHuHxnUpX
 
 ## Troublshooting
 
-If mitmproxy reports inability to connect to certain servers, then you may need to upgrade it by running `brew upgrade mitmproxy`.
+If mitmproxy reports inability to connect to certain servers, then you may need to upgrade it by running `yarn upgrade`.
