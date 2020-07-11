@@ -26,8 +26,7 @@ def clean(ctx):
     if file_.exists():
       os.remove(file_)
 
-  rm(main.csv_file)
-  rm(main.rewrite_csv_file)
+  rm(main.json_file)
 
   for file_ in main.download_dir.iterdir():
     if file_.name != '.gitkeep':

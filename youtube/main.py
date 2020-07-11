@@ -9,7 +9,6 @@ Download all the songs inside a YouTube playlist and for each song:
 import json
 import subprocess
 from pathlib import Path
-import csv
 
 import webvtt
 
@@ -19,13 +18,12 @@ here = Path(__file__).parent
 
 download_dir = here / 'downloads'
 output_dir = here / 'output'
-csv_file = here / 'youtube.csv'
-rewrite_csv_file = here / 'youtube-rewrite.csv'
+json_file = here / 'youtube.json'
 
 
 def process_playlist():
     download_songs(settings.YOUTUBE_PLAYLIST)
-    generate_csv()
+    generate_json()
     add_metadata()
 
 
@@ -41,6 +39,10 @@ def process_link(url):
 
 
 def download_songs(url):
+    """
+    If downloads folder doesn't have any mp4 files, download files from given YouTube URL.
+
+    """
     files = list(download_dir.glob('*.mp4'))
     if len(files) > 0:
         return
@@ -65,31 +67,36 @@ def download_songs(url):
     print(f'Files downloaded in {download_dir}')
 
 
-def generate_csv():
-    with csv_file.open('w') as fp:
-        writer = csv.writer(fp)
-        writer.writerow(['title', 'artist', 'album', 'url', 'path'])
+def generate_json():
+    """
+    If youtuble.json doesn't exist, read .info.json files from downloads directory and generate it
 
+    """
+    if json_file.exists():
+        return
+
+    def gen():
         for info in get_info_objects():
-            writer.writerow([
-                info['title'],  # title probably needs to be edited
-                '',             # artist is filled in by user
-                '',             # album is filled in by user
-                f"https://youtu.be/{info['id']}",
-                info['path'],
-            ])
+            yield dict(
+                title=info['title'], artist='', album='', link=f"https://youtu.be/{info['id']}", path=info['path'])
 
-    print('\nGenerated youtube.csv, edit it, and save to youtube-rewrite.csv!')
+    json_file.write_text(
+        json.dumps(list(gen()), indent=2, ensure_ascii=False)
+    )
+
+    print('\nGenerated youtube.json, edit it, and run `inv playlist` again!')
+
 
 
 def add_metadata():
-    if not rewrite_csv_file.exists():
+    """
+    If youtube.json file exists, iterate over its entries and generate corresponding .m4a files in output directory
+
+    """
+    if not json_file.exists():
         return
 
-    metas = None
-    with rewrite_csv_file.open() as fp:
-        reader = csv.DictReader(fp)
-        metas = list(reader)
+    metas = json.loads(json_file.read_text())
 
     for meta in metas:
         input_file = Path(meta['path'])
