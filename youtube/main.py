@@ -9,6 +9,7 @@ Download all the songs inside a YouTube playlist and for each song:
 import json
 import subprocess
 from pathlib import Path
+import functools
 
 import webvtt
 
@@ -78,7 +79,11 @@ def generate_json():
     def gen():
         for info in get_info_objects():
             yield dict(
-                title=info['title'], artist='', album='', link=f"https://youtu.be/{info['id']}", path=info['path'])
+                title=info['title'],
+                artist='',
+                album='',
+                genre='流行 Pop',  # just a placeholder
+                link=f"https://youtu.be/{info['id']}", path=info['path'])
 
     json_file.write_text(
         json.dumps(list(gen()), indent=2, ensure_ascii=False)
@@ -99,6 +104,9 @@ def add_metadata():
     metas = json.loads(json_file.read_text())
 
     for meta in metas:
+        if not meta['artist']:
+            print('You have not filled the artist field yet')
+            break
         input_file = Path(meta['path'])
         info_file = input_file.with_suffix('.info.json')
         info = json.loads(info_file.read_text())
@@ -129,15 +137,17 @@ def add_metadata_for_file(input_file, output_file, meta):
         '-i', str(input_file),
         '-acodec', 'copy',  # copy audio without additional processing
         '-vn',              # ignore video
-        '-metadata', 'genre=流行 Pop',  # just a placeholder
+        ('-ss', meta.get('start')),
+        ('-to', meta.get('end')),
+        '-metadata', f"genre={meta['genre']}",
         '-metadata', f"title={meta['title']}",
         '-metadata', f"artist={meta.get('artist', '')}",
         '-metadata', f"album={meta.get('album', '')}",
-        '-metadata', f"comment={meta['url']}",
+        '-metadata', f"comment={meta['webpage_url']}",
         '-metadata', f"lyrics={lyrics}",
         str(output_file)
     ]
-    subprocess.call(cmd)
+    call_process(cmd)
 
     cmd = [
         'aacgain',
@@ -148,32 +158,25 @@ def add_metadata_for_file(input_file, output_file, meta):
     ]
     subprocess.call(cmd)
 
-    image_file = input_file.with_suffix('.png')
-    if not image_file.exists():
-        image_file = input_file.with_suffix('.jpg')
-
+    image_file = input_file.with_suffix('.jpg')
     if image_file.exists():
-        cmd = [
-            'AtomicParsley',
-            str(output_file),
-            '--artwork', str(image_file),
-            '--overWrite'
-        ]
-        subprocess.call(cmd)
+        # Use imagemagick to fix .jpg file so it can be used by AtomicParsley
+        cmd = ['convert', image_file, image_file]
+        call_process(cmd)
     else:
+        # Use imagemagick to convert .webp file to .jpg file so it can be used by AtomicParsley
         webp_file = input_file.with_suffix('.webp')
         if webp_file.exists():
-            # Convert to png if format is webp
-            cmd = [
-                'ffmpeg',
-                '-y', # overwrite if file already exists
-                '-i', str(webp_file),
-                str(image_file.with_suffix('.png')),
-            ]
-            print(cmd)
-            subprocess.call(cmd)
+            cmd = ['convert', webp_file, image_file]
+            call_process(cmd)
 
-        print(f'No valid image file was found for {input_file}')
+    cmd = [
+        'AtomicParsley',
+        str(output_file),
+        '--artwork', str(image_file),
+        '--overWrite'
+    ]
+    call_process(cmd)
 
     print(f'\nOutput files generated in {output_file}')
 
@@ -184,3 +187,18 @@ def get_info_objects():
         video_file = (info_file.parent / info_file.stem).with_suffix('.mp4')
         info['path'] = str(video_file)
         yield info
+
+
+def call_process(cmd):
+    def reducer(acc, item):
+        if type(item) == tuple:
+            if item[-1] is None:
+                return acc
+            else:
+                return acc + list(item)
+        else:
+            return acc + [item]
+
+    cmd = functools.reduce(reducer, cmd, [])
+    print(f'Running command: {cmd}')
+    subprocess.call(cmd)
