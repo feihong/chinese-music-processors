@@ -83,7 +83,11 @@ def generate_json():
                 artist='',
                 album='',
                 genre='流行 Pop',  # just a placeholder
-                link=f"https://youtu.be/{info['id']}", path=info['path'])
+                link=f"https://youtu.be/{info['id']}",
+                path=info['path'],
+                start=None,
+                end=None,
+            )
 
     json_file.write_text(
         json.dumps(list(gen()), indent=2, ensure_ascii=False)
@@ -199,6 +203,7 @@ def call_process(cmd):
         else:
             return acc + [item]
 
+    # Get rid of tuple elements whose second elements are None
     cmd = functools.reduce(reducer, cmd, [])
     print(f'Running command: {cmd}')
     subprocess.call(cmd)
