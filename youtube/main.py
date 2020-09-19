@@ -124,14 +124,15 @@ def add_metadata():
 def add_metadata_for_file(input_file, output_file, meta):
     lyrics_lst = [meta.get('description', '')]
 
-    # Get lyrics from subtitles, if any.
-    for ext in ['.zh-Hans.vtt', '.zh-Hant.vtt', '.zh-TW.vtt']:
+    # Get lyrics from captions, if any.
+    caption_extensions = ['.zh.vtt', '.zh-Hans.vtt', '.zh-Hant.vtt', '.zh-TW.vtt']
+    for ext in caption_extensions:
         caption_file = input_file.with_suffix(ext)
         if caption_file.exists():
             vtt = webvtt.read(caption_file)
             text = '\n'.join(c.text for c in vtt.captions)
             lyrics_lst.append(text)
-            break  # process at most one caption file
+            break  # don't need to process all caption files
 
     lyrics = '\n\n=====\n\n'.join(lyrics_lst)
 
