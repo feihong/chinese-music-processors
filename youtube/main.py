@@ -125,7 +125,7 @@ def add_metadata_for_file(input_file, output_file, meta):
     lyrics_lst = [meta.get('description', '')]
 
     # Get lyrics from captions, if any.
-    caption_extensions = ['.zh.vtt', '.zh-Hans.vtt', '.zh-Hant.vtt', '.zh-TW.vtt']
+    caption_extensions = ['.zh.vtt', '.zh-Hans.vtt', '.zh-Hant.vtt', '.zh-CN.vtt', '.zh-TW.vtt']
     for ext in caption_extensions:
         caption_file = input_file.with_suffix(ext)
         if caption_file.exists():
