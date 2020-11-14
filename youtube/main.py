@@ -10,6 +10,7 @@ import json
 import subprocess
 from pathlib import Path
 import functools
+import urllib.parse
 
 import webvtt
 
@@ -119,6 +120,11 @@ def add_metadata():
         output_file = output_dir / f"{meta['artist']}  {meta['title']}.m4a"
 
         add_metadata_for_file(input_file, output_file, info)
+
+    print('\nLyrics search strings:')
+    for meta in metas:
+        query = f"{meta['title']} {meta['artist']} 歌词".replace(' ', '+')
+        print(f"https://www.google.com/search?q={query}")
 
 
 def add_metadata_for_file(input_file, output_file, meta):
