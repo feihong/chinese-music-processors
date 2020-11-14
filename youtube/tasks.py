@@ -7,11 +7,10 @@ from invoke import task
 @task
 def update(ctx):
   """
-  Update youtube-dl
+  Update dependencies such as youtube-dl, etc.
 
   """
-  cmd = ['pipenv', 'update', 'youtube-dl']
-  subprocess.call(cmd)
+  subprocess.call(['pipenv', 'update'])
 
 
 @task
