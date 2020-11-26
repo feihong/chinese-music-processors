@@ -2,7 +2,8 @@
 
 ## Prerequisites
 
-    brew install yarn node aacgain atomicparsley mitmproxy
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.1/install.sh | bash
+    brew install aacgain atomicparsley mitmproxy
     brew install ffmpeg --with-fdk-aac
 
 ## Installation
@@ -11,19 +12,21 @@
 
 To proxy https, visit the [magic domain mitm.it](http://mitm.it) and follow the instructions to install the mitmproxy certificate.
 
-## Procedure
+## Usage
 
-1. `yarn clean`
+1. `source ~/.nvm/nvm.sh` (if `nvm` is not started automatically in `~/.bash_profile`)
+1. `yarn upgrade` to upgrade mitmproxy (optional)
+1. `yarn clean` to clear downloaded assets from previous run
 1. `yarn start:proxy`
 1. In browser, set proxy to host: localhost, port: 8080
 1. Load a playlist page ([example](https://streetvoice.com/megafeihong/playlists/608652/))
 1. Start playing playlist
 1. Switch to album cover mode
 1. To help keep track of progress, click '列表' on the top menu
-1. Don't let display go to sleep
+1. Don't let your computer go to sleep
 1. Wait until all tracks have played
 1. `ctrl+c` to stop proxy
-1. `yarn process`
+1. `yarn process` to start generation of `m4a` files
 1. Generated files will be in `output` folder
 
 ## Commands
