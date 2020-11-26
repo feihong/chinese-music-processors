@@ -2,14 +2,12 @@
 
 These are scripts to help you process metadata for music files downloaded from YouTube and [StreetVoice](https://streetvoice.com).
 
-[Douban Music](https://music.douban.com/) support is deprecated.
-
 ## Installation
 
 ### Mac
 
 ```
-brew install mp3gain aacgain atomicparsley wget
+brew install aacgain atomicparsley wget
 brew install ffmpeg --with-fdk-aac
 ```
 
@@ -28,6 +26,7 @@ If you are on 16.04, you may need to download binaries for mp3gain and aacgain. 
 - [ffmpeg](https://github.com/feihong/feihong-setup/blob/master/ubuntu/compile_ffmpeg.sh)
 
 Sources:
+
 - http://www.linuxquestions.org/questions/linux-software-2/best-way-to-extract-aac-from-mp4-losslessly-852936/
 - http://archive09.linux.com/feature/59957
 - http://ubuntuforums.org/showthread.php?t=2194537
@@ -46,36 +45,6 @@ Now you can install the Python scripts:
 git clone https://github.com/feihong/chinese-music-processors
 cd chinese-music-processors
 pipenv install
-```
-
-### Browser (deprecated)
-
-In Firefox, you need to install the Douban Music Metadata add-on:
-
-- Visit the [Debugging Page](about:debugging)
-- Check `Enable add-on debugging`
-- Click on `Load Temporary Add-on`
-- Navigate to the project directory, select `webextension/manifest.json`
-
-## Usage
-
-### Douban Music (豆瓣音乐)
-
-#### Download songs
-
-- Visit [豆瓣音乐](https://music.douban.com/), and then click on an artist page, e.g. [放肆的肆](https://site.douban.com/wpoxs/)
-- Click on the "play" or "add" button next to song titles to add songs to the [Music Player](https://music.douban.com/artists/player/)
-- Click on the Douban Music Metadata icon in your toolbar and select `Automatically download files`
-- Songs that you play in the player will automatically download to `~/Downloads/douban-songs`
-- Once all songs have been downloaded, click on add-on icon and select `Show metadata`
-- A small metadata section will appear at the top of the page
-- Click `Copy to clipboard`
-- Create a file called `input.json` in project directory and paste the metadata into it
-- In terminal, navigate to project directory and run
-
-```
-pipenv shell
-inv douban
 ```
 
 ## References
