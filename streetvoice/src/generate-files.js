@@ -15,14 +15,14 @@ function prepare(whereClause) {
 const songs = require(paths.songsFile)
 
 for (let song of songs) {
-  const stmt = prepare(`path LIKE '%/songs/${song.id}/%fields=lyrics%'`)
+  const stmt = prepare(`path LIKE '%/song/${song.id}/%fields=lyrics%'`)
   const row = stmt.get()
   if (row) {
-    song.lyrics = JSON.parse(row.data.toString()).lyrics
+    song.lyrics = JSON.parse(row.data.toString()).lyrics.replace(/[\r][\n]/g, '\n')
   }
 
   // Get id of .ts file
-  const stmt2 = prepare(`path LIKE '%/songs/${song.id}/hls/'`)
+  const stmt2 = prepare(`path LIKE '%/song/${song.id}/hls/file/'`)
   const row2 = stmt2.get()
   if (row2) {
     let fileIdRe = /\/([a-zA-Z0-9]+)[.]mp3/
