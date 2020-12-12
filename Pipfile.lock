@@ -132,28 +132,28 @@
         },
         "webvtt-py": {
             "hashes": [
-                "sha256:a953540f1886e4ef2e5a973d7d22a4f3e67c7f8a931cd5fa55a371efb5f8aeb2"
+                "sha256:5cf9da2a8c34bc789db599377be87b228b7e4734c629597edd27a8054e004a57"
             ],
             "index": "pypi",
-            "version": "==0.4.5"
+            "version": "==0.4.6"
         },
         "youtube-dl": {
             "hashes": [
-                "sha256:1491df1707f47207bfd47dd8497d26e9125dd9e4fe2e00780103d4c1b4b2088d",
-                "sha256:858aa2685b499ee4c73eaf406ec3ae32285d82c89a0dd070205bfa2dbfc0d87c"
+                "sha256:a57bab1cfc3d57ae84e26e735daac498fd7b54261fe911e5ba58acfd0ed71742",
+                "sha256:f54bd64f161becc4ede1601cd610e956b2bc65b0467f8aa01803111ccb153b66"
             ],
             "index": "pypi",
-            "version": "==2020.11.12"
+            "version": "==2020.12.12"
         }
     },
     "develop": {
         "appnope": {
             "hashes": [
-                "sha256:5b26757dc6f79a3b7dc9fab95359328d5747fcb2409d331ea66d0272b90ab2a0",
-                "sha256:8b995ffe925347a2138d7ac0fe77155e4311a0ea6d6da4f5128fe4b3cbe5ed71"
+                "sha256:93aa393e9d6c54c5cd570ccadd8edad61ea0c4b9ea7a01409020c9aa019eb442",
+                "sha256:dd83cd4b5b460958838f6eb3000c660b1f9caf2a5b1de4264e941512f603258a"
             ],
             "markers": "sys_platform == 'darwin'",
-            "version": "==0.1.0"
+            "version": "==0.1.2"
         },
         "astroid": {
             "hashes": [
@@ -297,11 +297,11 @@
         },
         "pygments": {
             "hashes": [
-                "sha256:381985fcc551eb9d37c52088a32914e00517e57f4a21609f48141ba08e193fa0",
-                "sha256:88a0bbcd659fcb9573703957c6b9cff9fab7295e6e76db54c9d00ae42df32773"
+                "sha256:ccf3acacf3782cbed4a989426012f1c535c9a90d3a7fc3f16d231b9372d2b716",
+                "sha256:f275b6c0909e5dafd2d6269a656aa90fa58ebf4a74f8fcf9053195d226b24a08"
             ],
             "markers": "python_version >= '3.5'",
-            "version": "==2.7.2"
+            "version": "==2.7.3"
         },
         "pylint": {
             "hashes": [
