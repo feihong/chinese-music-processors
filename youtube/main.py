@@ -154,7 +154,7 @@ def add_metadata_for_file(input_file, output_file, meta):
         '-metadata', f"title={meta['title']}",
         '-metadata', f"artist={meta.get('artist', '')}",
         '-metadata', f"album={meta.get('album', '')}",
-        '-metadata', f"comment={meta['webpage_url']}",
+        '-metadata', f"comment={meta['link']}",
         '-metadata', f"lyrics={lyrics}",
         str(output_file)
     ]
