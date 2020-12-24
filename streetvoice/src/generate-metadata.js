@@ -13,9 +13,14 @@ function prepare(whereClause) {
 
 const genreMap = {
   1: 'Rock',
+  2: 'Hip hop',
   3: 'Electronic',
+  4: 'Pop',
+  5: 'Folk',
   6: 'Singer/Songwriter',
+  8: 'Post rock',
   12: 'R&B/Soul',
+  16: 'Soundtrack/New Age',
 };
 
 const imageIdRe = /\/([a-zA-Z0-9]+)[.](?:jpg|jpeg|png)/i;
