@@ -12,13 +12,15 @@ function prepare(whereClause) {
 }
 
 const genreMap = {
-  1: 'Rock',
-  2: 'Hip hop',
-  3: 'Electronic',
-  4: 'Pop',
-  5: 'Folk',
+  1: '摇滚 Rock',
+  2: '说唱 Rap',
+  3: '电子 Electronica',
+  4: '流行 Pop',
+  5: '民谣 Folk',
   6: 'Singer/Songwriter',
-  8: 'Post rock',
+  7: '另类 Alternative',
+  8: '后摇滚 Post rock',
+  10: '朋克 Punk',
   12: 'R&B/Soul',
   16: 'Soundtrack/New Age',
 };

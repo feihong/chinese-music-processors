@@ -99,3 +99,9 @@ for (const song of songs) {
   convertToM4a(song, outputFile);
   addCoverArt(song, outputFile);
 }
+
+console.log('\nSearch for lyrics on Google:')
+for (const song of songs) {
+  const query = `${song.artist}  ${song.title} 歌词`.replace(/ /g, '+');
+  console.log(`https://www.google.com/search?q=${query}`);
+}
