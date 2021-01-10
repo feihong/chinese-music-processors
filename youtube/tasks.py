@@ -33,13 +33,13 @@ def clean(ctx):
 
 
 @task
-def playlist(ctx):
+def playlist(ctx, url=None):
   """
   Process YouTube playlist
 
   """
   import main
-  main.process_playlist()
+  main.process_playlist(url)
 
 
 @task

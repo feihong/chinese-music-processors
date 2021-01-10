@@ -23,8 +23,8 @@ output_dir = here / 'output'
 json_file = here / 'youtube.json'
 
 
-def process_playlist():
-    download_songs(settings.YOUTUBE_PLAYLIST)
+def process_playlist(playlist_url):
+    download_songs(playlist_url if playlist_url else settings.YOUTUBE_PLAYLIST)
     generate_json()
     add_metadata()
 
