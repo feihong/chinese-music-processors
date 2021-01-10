@@ -12,7 +12,7 @@
   "scripts": {
     "upgrade": "brew upgrade mitmproxy",
     "clean": "rm assets/* && rm dumpfile",
-    "start:proxy": "mitmdump -w dumpfile --anticache",
+    "start:proxy": "pipenv run mitmdump -w dumpfile --anticache",
     "convert-to-sqlite": "mitmdump -ns src/convert_to_sqlite.py -r dumpfile",
     "generate-metadata": "node src/generate-metadata.js",
     "generate-files": "node src/generate-files.js",
