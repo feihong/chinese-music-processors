@@ -16,7 +16,7 @@
     "start": "run-p start:proxy start:puppeteer",
     "start:proxy": "pipenv run mitmdump -w dumpfile --anticache",
     "start:puppeteer": "node src/start-puppeteer.js",
-    "convert-to-sqlite": "mitmdump -ns src/convert_to_sqlite.py -r dumpfile",
+    "convert-to-sqlite": "pipenv run mitmdump -ns src/convert_to_sqlite.py -r dumpfile",
     "generate-metadata": "node src/generate-metadata.js",
     "generate-files": "node src/generate-files.js",
     "consolidate": "node src/consolidate.js",
