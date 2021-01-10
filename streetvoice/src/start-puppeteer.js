@@ -1,6 +1,13 @@
 const puppeteer = require("puppeteer-core");
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 async function main () {
+  // Wait a second to give mitmproxy time to start up
+  await sleep(1000);
+
   const browser = await puppeteer.launch({
     headless: false,
     executablePath: "/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome",
