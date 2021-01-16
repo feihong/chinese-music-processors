@@ -5,11 +5,12 @@ function sleep(ms) {
 }
 
 async function main () {
-  // Wait a second to give mitmproxy time to start up
-  await sleep(1000);
+  // Wait a little while to give mitmproxy time to start up
+  await sleep(2000);
 
   const browser = await puppeteer.launch({
     headless: false,
+    defaultViewport: null,
     executablePath: "/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome",
     args: [ '--proxy-server=http://127.0.0.1:8080' ],
   });
