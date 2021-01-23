@@ -11,7 +11,7 @@
     "sanitize-filename": "^1.6.3"
   },
   "scripts": {
-    "upgrade": "brew upgrade mitmproxy",
+    "upgrade:python": "pipenv update",
     "clean": "rm assets/* && rm dumpfile",
     "start": "run-p start:proxy start:puppeteer",
     "start:proxy": "pipenv run mitmdump -w dumpfile --anticache",

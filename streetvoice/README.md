@@ -15,10 +15,9 @@ To proxy https, visit the [magic domain mitm.it](http://mitm.it) and follow the 
 ## Usage
 
 1. `source ~/.nvm/nvm.sh` (if `nvm` is not started automatically in `~/.bash_profile`)
-1. `yarn upgrade` to upgrade mitmproxy (optional)
+1. `yarn upgrade:python` to upgrade mitmproxy and other Python dependencies (optional)
 1. `yarn clean` to clear downloaded assets from previous run
-1. `yarn start:proxy`
-1. In browser, set proxy to host: localhost, port: 8080
+1. `yarn start`
 1. Load a playlist page ([example](https://streetvoice.com/megafeihong/playlists/608652/))
 1. Start playing playlist
 1. Switch to album cover mode
@@ -48,4 +47,5 @@ Cover art: https://cfstatic.streetvoice.com/song_covers/go/od/goodband/eHuHxnUpX
 
 ## Troublshooting
 
-If mitmproxy reports inability to connect to certain servers, then you may need to upgrade it by running `yarn upgrade`.
+If mitmproxy reports inability to connect to certain servers, then you may need to upgrade it by running
+`yarn upgrade:python`.
