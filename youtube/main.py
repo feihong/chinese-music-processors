@@ -117,13 +117,14 @@ def add_metadata():
         info = json.loads(info_file.read_text())
         info.update(meta)
 
-        output_file = output_dir / f"{meta['artist']}  {meta['title']}.m4a"
+        file_name = f"{meta['artist']}  {meta['title']}.m4a".replace('/', '_')
+        output_file = output_dir / file_name
 
         add_metadata_for_file(input_file, output_file, info)
 
     print('\nLyrics search strings:')
     for meta in metas:
-        query = f"{meta['title']} {meta['artist']} 歌词".replace(' ', '+')
+        query = f"{meta['title']} {meta['artist']} Lyrics".replace(' ', '+')
         print(f"https://www.google.com/search?q={query}")
 
 
