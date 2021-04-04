@@ -98,6 +98,15 @@ def generate_json():
 
 
 
+def print_search_urls():
+    metas = json.loads(json_file.read_text())
+
+    print('\nLyrics search strings:')
+    for meta in metas:
+        query = f"{meta['title']} {meta['artist']} Lyrics".replace(' ', '+')
+        print(f"https://www.google.com/search?q={query}")
+
+
 def add_metadata():
     """
     If youtube.json file exists, iterate over its entries and generate corresponding .m4a files in output directory
@@ -122,10 +131,7 @@ def add_metadata():
 
         add_metadata_for_file(input_file, output_file, info)
 
-    print('\nLyrics search strings:')
-    for meta in metas:
-        query = f"{meta['title']} {meta['artist']} Lyrics".replace(' ', '+')
-        print(f"https://www.google.com/search?q={query}")
+    print_search_urls()
 
 
 def add_metadata_for_file(input_file, output_file, meta):
