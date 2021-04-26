@@ -71,7 +71,7 @@ def download_songs(url):
 
 def generate_json():
     """
-    If youtuble.json doesn't exist, read .info.json files from downloads directory and generate it
+    If youtube.json doesn't exist, read .info.json files from downloads directory and generate it
 
     """
     if json_file.exists():
@@ -82,8 +82,9 @@ def generate_json():
             yield dict(
                 title=info['title'],
                 artist='',
+                channel=info['channel'],
                 album='',
-                genre='流行 Pop',  # just a placeholder
+                genre='Pop',  # just a placeholder
                 link=f"https://youtu.be/{info['id']}",
                 path=info['path'],
                 start=None,
