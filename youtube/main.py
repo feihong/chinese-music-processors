@@ -81,7 +81,7 @@ def generate_json():
         for info in get_info_objects():
             yield dict(
                 title=info['title'],
-                artist='',
+                artist=info['channel'],
                 channel=info['channel'],
                 album='',
                 genre='Pop',  # just a placeholder
