@@ -33,7 +33,7 @@ Sources:
 
 ### Python
 
-If you don't already have it, install virtualenvwrapper and pipenv:
+If you don't already have it, install pipenv:
 
 ```
 pip3 install pipenv
