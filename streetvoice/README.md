@@ -3,12 +3,13 @@
 ## Prerequisites
 
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.1/install.sh | bash
-    brew install aacgain atomicparsley mitmproxy
+    brew install aacgain atomicparsley
     brew install ffmpeg --with-fdk-aac
 
 ## Installation
 
     yarn install
+    npx playwright install-deps
 
 To proxy https, visit the [magic domain mitm.it](http://mitm.it) and follow the instructions to install the mitmproxy certificate.
 
@@ -45,7 +46,7 @@ Single slice of audio: https://cfhls.streetvoice.com/music/mi/ss/missbac/UFytKaN
 
 Cover art: https://cfstatic.streetvoice.com/song_covers/go/od/goodband/eHuHxnUpXxqEt4j8a7i9Za.jpg?x-oss-process=image/resize,m_fill,h_610,w_610,limit_0/interlace,1/quality,q_85/format,jpg
 
-## Troublshooting
+## Troubleshooting
 
 If mitmproxy reports inability to connect to certain servers, then you may need to upgrade it by running
 `yarn upgrade:python`.
