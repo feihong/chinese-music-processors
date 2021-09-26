@@ -5,17 +5,10 @@ name = "pypi"
 
 [packages]
 invoke = "*"
-mutagen = "*"
 webvtt-py = "*"
 "jinja2" = "*"
 youtube_dl = "*"
-hy = "*"
 mitmproxy = "*"
-
-[dev-packages]
-ipython = "*"
-pylint = "*"
-autopep8 = "*"
 
 [requires]
 python_version = "3.9"

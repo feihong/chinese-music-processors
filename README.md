@@ -16,7 +16,8 @@ brew install ffmpeg --with-fdk-aac
 Install dependencies on Ubuntu:
 
 ```
-apt-get install xclip ffmpeg atomicparsley mp3gain aacgain
+sudo apt-get install ffmpeg atomicparsley mp3gain
+sudo snap install aacgain
 ```
 
 If you are on 16.04, you may need to download binaries for mp3gain and aacgain. In addition, you'll need to build ffmpeg yourself since version you get from apt-get doesn't include some AAC-related features.
@@ -36,7 +37,7 @@ Sources:
 If you don't already have it, install pipenv:
 
 ```
-pip3 install pipenv
+pip3 install --user pipenv
 ```
 
 Now you can install the Python scripts:
