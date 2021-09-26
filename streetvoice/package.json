@@ -6,18 +6,15 @@
   "dependencies": {
     "better-sqlite3": "^7.0.1",
     "npm-run-all": "^4.1.5",
-    "playwright": "^1.15.0",
-    "puppeteer": "^5.5.0",
-    "puppeteer-core": "^5.5.0",
+    "puppeteer-core": "^10.4.0",
     "sanitize-filename": "^1.6.3"
   },
   "scripts": {
     "upgrade:python": "pipenv update",
     "clean": "rm assets/* && rm dumpfile",
-    "start": "run-p start:proxy start:playwright",
+    "start": "run-p start:proxy start:puppeteer",
     "start:proxy": "pipenv run mitmdump -w dumpfile --anticache",
     "start:puppeteer": "node src/start-puppeteer.js",
-    "start:playwright": "node src/start-playwright.js",
     "convert-to-sqlite": "pipenv run mitmdump -ns src/convert_to_sqlite.py -r dumpfile",
     "generate-metadata": "node src/generate-metadata.js",
     "generate-files": "node src/generate-files.js",

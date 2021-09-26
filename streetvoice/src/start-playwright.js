@@ -1,3 +1,4 @@
+// Playwright API is nicer, but it has problems downloading media. See README for details.
 const playwright = require('playwright')
 
 function sleep(ms) {

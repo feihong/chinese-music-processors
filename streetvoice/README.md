@@ -50,3 +50,7 @@ Cover art: https://cfstatic.streetvoice.com/song_covers/go/od/goodband/eHuHxnUpX
 
 If mitmproxy reports inability to connect to certain servers, then you may need to upgrade it by running
 `yarn upgrade:python`.
+
+## Notes
+
+We use Puppeteer to open up a separate browser instance that is automatically configured to use mitmproxy. This is convenient, but the big downside of Puppeteer is that it eats up CPU like crazy. Playwright is similar to Puppeteer and does have a somewhat nicer API, but after opening a browser window, it can't download any media files. The problem exists on both Mac and Linux.
