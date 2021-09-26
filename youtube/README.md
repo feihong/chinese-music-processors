@@ -4,7 +4,7 @@
 
 Process an entire YouTube playlist
 
-    pipenv run inv playlist
+    make playlist
 
 Process a single link
 
@@ -12,11 +12,11 @@ Process a single link
 
 Update youtube-dl
 
-    pipenv run inv update
+    make update
 
 Clean up files
 
-    pipenv run inv clean
+    make clean
 
 ## Instructions for processing YouTube playlist
 
