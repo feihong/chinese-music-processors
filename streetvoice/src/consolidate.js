@@ -36,10 +36,8 @@ function convertToM4a(song, outputFile) {
       "-metadata",
       `year=${song.year}`,
       "-vn", // ignore video
-      "-c:a",
-      "libfdk_aac", // use best encoder
-      "-vbr",
-      "4", // use high quality
+      "-c:a", "libfdk_aac", // use best encoder
+      "-vbr", "4", // use high quality (5 is highest)
       outputFile,
     ],
     { stdio: "inherit" }
