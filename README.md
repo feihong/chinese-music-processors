@@ -2,6 +2,25 @@
 
 These are scripts to help you process metadata for music files downloaded from YouTube and [StreetVoice](https://streetvoice.com).
 
+## Prerequisites
+
+### Linux
+
+    curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+    # Update ~/.profile and ~/.bashrc according to instructions, then logout/login
+
+### Mac
+
+    brew update
+    brew install pyenv
+    echo 'eval "$(pyenv init --path)"' >> ~/.zprofile
+    echo 'eval "$(pyenv init -)"' >> ~/.zshrc
+
+### Install latest version of Python 3
+
+    pyenv install 3.10.0
+    pyenv global 3.10.0
+
 ## Installation
 
 ### Mac
@@ -22,21 +41,9 @@ sudo snap install aacgain
 
 The version of ffmpeg in the repository won't include Fraunhofer FDK AAC encoder (libfdk_aac). You'll need to compile ffmpeg yourself to get access to that encoder: https://gist.github.com/rafaelbiriba/7f2d7c6f6c3d6ae2a5cb
 
-### Python
+### Python dependencies
 
-If you don't already have it, install pipenv:
-
-```
-pip3 install --user pipenv
-```
-
-Now you can install the Python scripts:
-
-```
-git clone https://github.com/feihong/chinese-music-processors
-cd chinese-music-processors
-pipenv install
-```
+    pip install --user --requirement requirements.txt
 
 ## References
 

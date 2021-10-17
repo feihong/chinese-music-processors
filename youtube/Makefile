@@ -1,8 +1,8 @@
-update:
-	pipenv update
+upgrade:
+	pip install --user --upgrade youtube_dl
 
 playlist:
-	pipenv run inv playlist
+	python playlist.py
 
 clean:
 	rm youtube.json; rm downloads/*

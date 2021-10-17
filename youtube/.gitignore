@@ -4,6 +4,7 @@
 /downloads/*.json
 /downloads/*.vtt
 /downloads/*.mp4
+/downloads/*.part
 
 /output/*.m4a
 
