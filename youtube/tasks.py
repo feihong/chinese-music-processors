@@ -1,5 +1,4 @@
-import subprocess
-import os
+# This module is deprecated, use Makefile again
 from pathlib import Path
 from invoke import task
 

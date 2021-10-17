@@ -1,11 +1,5 @@
 # StreetVoice scraper
 
-## Prerequisites
-
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.1/install.sh | bash
-    brew install aacgain atomicparsley
-    brew install ffmpeg --with-fdk-aac
-
 ## Installation
 
     make install
@@ -21,6 +15,7 @@ You have to manually install the mitmproxy certificate:
 
 ## Usage
 
+1. Close all Brave browser windows (to guarantee that traffic goes through proxy)
 1. `make upgrade` to upgrade mitmproxy (optional)
 1. `make clean` to clear downloaded assets from previous run
 1. `yarn start`
