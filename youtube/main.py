@@ -203,6 +203,8 @@ def add_metadata_for_file(input_file, output_file, meta):
 def get_info_objects():
     for info_file in download_dir.glob('*.info.json'):
         info = json.loads(info_file.read_text())
+        if info.get('_type') == 'playlist':
+          continue
         video_file = (info_file.parent / info_file.stem).with_suffix('.mp4')
         info['path'] = str(video_file)
         yield info
