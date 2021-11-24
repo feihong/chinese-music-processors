@@ -7,7 +7,7 @@ These are scripts to help you process metadata for music files downloaded from Y
 ### Linux
 
     curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
-    # Update ~/.profile and ~/.bashrc according to instructions, then logout/login
+    # Update ~/.profile and ~/.bashrc according to instructions, then logout and login
 
 ### Mac
 
@@ -35,7 +35,7 @@ brew install ffmpeg --with-fdk-aac
 Install dependencies on Ubuntu:
 
 ```
-sudo apt-get install ffmpeg atomicparsley mp3gain
+sudo apt-get install ffmpeg atomicparsley mp3gain imagemagick
 sudo snap install aacgain
 ```
 

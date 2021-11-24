@@ -1,5 +1,5 @@
 upgrade:
-	pip install --user --upgrade youtube_dl
+	pip install --user --upgrade yt-dlp
 
 playlist:
 	python playlist.py

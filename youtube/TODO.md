@@ -1,3 +1,3 @@
 # TODO
 
-- Support trimming audio file when extracting it
+- [x] Support trimming audio file when extracting it

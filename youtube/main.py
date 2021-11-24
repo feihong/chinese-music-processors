@@ -50,10 +50,10 @@ def download_songs(url):
         return
 
     cmd = [
-        'youtube-dl',
+        'yt-dlp',
         '--write-thumbnail',
         '--write-info-json',
-        '--all-subs',
+        '--sub-langs', 'all', '--write-subs',
         '--format', '[ext=mp4]',
         '--output', f'{download_dir}/%(title)s-%(id)s.%(ext)s',
         url,
