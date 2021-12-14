@@ -9,15 +9,6 @@
     "sanitize-filename": "^1.6.3"
   },
   "scripts": {
-    "clean": "rm assets/* && rm dumpfile",
-    "start": "run-p start:proxy start:browser",
-    "start:proxy": "make proxy",
-    "start:browser": "make browser",
-    "convert-to-sqlite": "mitmdump -ns src/convert_to_sqlite.py -r dumpfile",
-    "generate-metadata": "node src/generate-metadata.js",
-    "generate-files": "node src/generate-files.js",
-    "consolidate": "node src/consolidate.js",
-    "process": "run-s convert-to-sqlite generate-metadata generate-files consolidate",
     "download-cover-art": "node src/download-cover-art.js"
   }
 }
