@@ -17,12 +17,13 @@ const genreMap = {
   3: '电子 Electronica',
   4: '流行 Pop',
   5: '民谣 Folk',
-  6: 'Singer/Songwriter',
+  6: '唱作人 Singer/Songwriter',
   7: '另类 Alternative',
   8: '后摇滚 Post rock',
   10: '朋克 Punk',
   12: 'R&B/Soul',
   16: 'Soundtrack/New Age',
+  17: '世界 World',
 };
 
 const imageIdRe = /\/([a-zA-Z0-9]+)[.](?:jpg|jpeg|png)/i;
