@@ -2,10 +2,7 @@
 Dump flows into sqlite database so that you can randomly access them.
 """
 import os.path
-from pathlib import Path
 import sqlite3
-import typing
-
 import mitmproxy.http
 from mitmproxy import ctx
 
@@ -15,36 +12,33 @@ class MyAddon:
       if os.path.exists(filename):
         os.remove(filename)
       self.conn = sqlite3.connect(filename)
-      self.cur = self.conn.cursor()
-      self.cur.execute('CREATE TABLE dump (path text, content_type text, data blob)')
-      self.conn.commit()
+      self.conn.execute('CREATE TABLE dump (path text, content_type text, data blob)')
 
     def response(self, flow: mitmproxy.http.HTTPFlow):
-        """
-        The full HTTP response has been read.
-        """
-        try:
-          # ctx.log.info(flow.request.path)
-          res = flow.response
-          content_type = res.headers.get('content-type')
-          if content_type:
-            self.cur.execute(
-              'INSERT INTO dump VALUES (?, ?, ?)',
-              (
-                flow.request.path,
-                content_type,
-                res.content,
-              )
+      """
+      The full HTTP response has been read.
+      """
+      try:
+        # ctx.log.info(flow.request.path)
+        res = flow.response
+        content_type = res.headers.get('content-type')
+        if content_type:
+          self.conn.execute(
+            'INSERT INTO dump VALUES (?, ?, ?)',
+            (
+              flow.request.path,
+              content_type,
+              res.content,
             )
-        except Exception as e:
-          ctx.log.error(str(e))
-
-        self.conn.commit()
+          )
+      except Exception as e:
+        ctx.log.error(str(e))
 
     def done(self):
-        self.conn.close()
-        print('\nDone!\n')
+      self.conn.commit()
+      self.conn.close()
+      print('\nDone!\n')
 
 addons = [
-    MyAddon()
+  MyAddon()
 ]
