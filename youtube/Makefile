@@ -2,7 +2,7 @@ upgrade:
 	pip install --user --upgrade yt-dlp
 
 playlist:
-	python playlist.py
+	coconut-run playlist.coco
 
 clean:
 	rm youtube.json; rm downloads/*
