@@ -1,0 +1,38 @@
+"""
+Supplement track metadata with lyrics, file ID, image ID, etc. Write cover art and audio files to disk.
+"""
+import sqlite3
+import json
+import os
+import re
+import paths
+
+with sqlite3.connect(paths.db_file) as conn:
+  with open(paths.songs_file) as fp:
+    songs = json.load(fp)
+    for song in songs:
+      (data_,) = conn.execute(f"SELECT data FROM dump WHERE path LIKE '%/song/{song['id']}/%fields=lyrics%'").fetchone()
+      song['lyrics'] = json.loads(data_)['lyrics'].replace(r'\r\n', '\n')
+
+      # Get id of .mp3 file
+      (data_,) = conn.execute(f"SELECT data FROM dump WHERE path LIKE '%/song/{song['id']}/hls/file/'").fetchone()
+      song['file_id'] = json.loads(data_)['file'] |> re.match$(r'.*/([a-zA-Z0-9]+)[.]mp3') |> .group(1)
+
+      # Write cover art to disk (grab the largest image we downloaded)
+      sql = f"SELECT data, content_type FROM dump WHERE path LIKE '%/{song['image_id']}%' ORDER BY length(data) DESC"
+      data_, content_type = conn.execute(sql).fetchone()
+      extension = re.match(content_type, r'image/([a-z]+)') |> .group(1)
+      image_file = paths.assets_dir / f"{song['image_id']}.{extension}"
+      image_file.write_bytes(data_)
+      song['image_file'] = str(image_file)
+
+      # Create single .mp3 file by concatenating individual .ts files that have the same file_id
+      sql = f"SELECT data FROM dump WHERE path LIKE '%/{song['file_id']}.mp3%' ORDER BY path"
+      mp3_file = paths.assets_dir / f"{song['id']}.mp3"
+      if mp3_file.exists():
+        os.remove(mp3_file)
+      with mp3_file.open('wb') as fp:
+        for (data_,) in conn.execute(sql):
+          fp.write(data)
+
+json.dumps(songs, indent=2, ensure_ascii=False) |> paths.song_extra_file.write_text

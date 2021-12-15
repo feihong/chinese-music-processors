@@ -6,4 +6,6 @@ db_file = root / 'dumpfile.db'
 assets_dir = root / 'assets'
 output_dir = root / 'output'
 cover_art_dir = root / 'cover-art'
+
 songs_file = assets_dir / 'songs.json'
+songs_extra_file = assets_dir / 'songs_extra.json'
