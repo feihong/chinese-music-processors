@@ -9,3 +9,5 @@ cover_art_dir = root / 'cover-art'
 
 songs_file = assets_dir / 'songs.json'
 songs_extra_file = assets_dir / 'songs_extra.json'
+
+def get_ts_file(song_id) = assets_dir / f"{song_id}.ts"
