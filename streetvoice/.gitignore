@@ -20,3 +20,4 @@ dumpfile.db
 generate_metadata.py
 paths.py
 generate_files.py
+consolidate.py
