@@ -36,7 +36,7 @@ def download_songs(url):
     if len(files) > 0:
       return
 
-    subprocess.run([
+    run_process(
       'yt-dlp',
       '--write-thumbnail',
       '--write-info-json',
@@ -44,14 +44,13 @@ def download_songs(url):
       '--format', '[ext=mp4]',
       '--output', f'{download_dir}/%(title)s-%(id)s.%(ext)s',
       url,
-    ])
+    )
 
     # Nicely format the info.json files
     for info_file in download_dir.glob('*.info.json'):
       slurp_json(info_file) |> spit_json$(info_file)
 
     print(f'Files downloaded in {download_dir}')
-
 
 def generate_json():
     """
@@ -103,7 +102,6 @@ def add_metadata():
 
     print_search_urls()
 
-
 def add_metadata_for_file(input_file, output_file, meta):
   lyrics_lst = [meta.get('description', '')]
 
@@ -136,29 +134,29 @@ def add_metadata_for_file(input_file, output_file, meta):
     output_file,
   )
 
-  subprocess.run([
+  run_process(
     'aacgain',
     '-r',  # apply Track gain automatically (all files set to equal loudness)
     '-k',  # automatically lower Track/Album gain to not clip audio
-    str(output_file)
-  ])
+    output_file,
+  )
 
   image_file = input_file.with_suffix('.jpg')
   if image_file.exists():
     # Use imagemagick to fix .jpg file so it can be used by AtomicParsley
-    subprocess.run(['convert', image_file, image_file])
+    run_process('convert', image_file, image_file)
   else:
     # Use imagemagick to convert .webp file to .jpg file so it can be used by AtomicParsley
     webp_file = input_file.with_suffix('.webp')
     if webp_file.exists():
-      subprocess.run(['convert', webp_file, image_file])
+      run_process('convert', webp_file, image_file)
 
-  subprocess.run([
+  run_process(
     'AtomicParsley',
-    str(output_file),
-    '--artwork', str(image_file),
-    '--overWrite'
-  ])
+    output_file,
+    '--artwork', image_file,
+    '--overWrite',
+  )
   print(f'\nOutput files generated in {output_file}')
 
 def slurp_json(json_file) = json_file.read_text() |> json.loads
