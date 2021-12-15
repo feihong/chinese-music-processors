@@ -1,4 +1,5 @@
 # TODO
 
 - [x] Support trimming audio file when extracting it
-- [ ] Migrate from Python to Coconut
+- [x] Migrate from Python to Coconut
+- [ ] Get rid of webvtt dependency

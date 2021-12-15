@@ -180,10 +180,12 @@ def run_process(cmd):
   """
   def reducer(acc, item):
     case item:
+      match value if isinstance(value, str):
+        return acc + [item]
+      match (key, None):
+        return acc
       match (key, value):
-        return if value is None then acc else acc + list(item)
-    else:
-      return acc + [item]
+        return acc + list(item)
 
   cmd = reduce(reducer, cmd, [])
   print(f'Running command: {cmd}')
