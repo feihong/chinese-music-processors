@@ -11,6 +11,8 @@ def run_script(name):
     cmd = ['python', 'src/' + name]
   elif name.endswith('.js'):
     cmd = ['node', 'src/' + name]
+  elif name.endswith('.coco'):
+    cmd = ['coconut-run', name]
   else:
     cmd = ['make', name]
 

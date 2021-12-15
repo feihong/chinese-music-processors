@@ -1,0 +1,45 @@
+import json
+import sqlite3
+import re
+import paths
+
+genre_map = {
+  1: '摇滚 Rock',
+  2: '说唱 Rap',
+  3: '电子 Electronica',
+  4: '流行 Pop',
+  5: '民谣 Folk',
+  6: '唱作人 Singer/Songwriter',
+  7: '另类 Alternative',
+  8: '后摇滚 Post rock',
+  10: '朋克 Punk',
+  12: 'R&B/Soul',
+  16: 'Soundtrack/New Age',
+  17: '世界 World',
+}
+
+image_id_regex = r'.*/([a-zA-Z0-9]+)[.](?:jpg|jpeg|png)'
+
+def get_songs(conn):
+  sql = "SELECT data FROM dump WHERE path LIKE '%song_ids=%' AND content_type LIKE 'application/json%'"
+  for (data_,) in conn.execute(sql):
+    results = json.loads(data_) |> .['results']
+    for result in results:
+      yield dict(
+        id=result['id'],
+        title=result['name'],
+        artist=result['user']['profile']['nickname'],
+        url=f"https://streetvoice.com/{result['user']['username']}/songs/{result['id']}/",
+        image_url=result['image'],
+        image_id=re.match(image_id_regex, result['image']) |> .group(1),
+        album=if result['album'] then result['album']['name'] else "",
+        genre=genre_map.get(result['genre']) ?? result['genre'],
+        year=result['created_at'][:4],
+      )
+
+with sqlite3.connect(paths.db_file) as conn:
+  songs = get_songs(conn) |> list
+  json.dumps(songs, indent=2, ensure_ascii=False) |> paths.songs_file.write_text
+
+  for i, song in enumerate(songs, 1):
+    print(f"{i}. {song['title']}")

@@ -25,7 +25,7 @@ convert_to_sqlite:
 	mitmdump -ns src/convert_to_sqlite.py -r dumpfile
 
 process:
-	python runner.py sequential convert_to_sqlite generate-metadata.js generate-files.js consolidate.js
+	python runner.py sequential convert_to_sqlite generate_metadata.coco generate-files.js consolidate.js
 
 clean:
 	rm assets/* && rm dumpfile

@@ -18,15 +18,15 @@ You have to manually install the mitmproxy certificate:
 1. Close all Brave browser windows (to guarantee that traffic goes through proxy)
 1. `make upgrade` to upgrade mitmproxy (optional)
 1. `make clean` to clear downloaded assets from previous run
-1. `yarn start`
+1. `make start`
 1. Open playlist page
 1. Start playing playlist
 1. Switch to album cover mode
 1. To help keep track of progress, click '列表' on the top menu
 1. Don't let your computer go to sleep
 1. Wait until all tracks have played
-1. `ctrl+c` to stop proxy and browser
-1. `yarn process` to start generation of `m4a` files
+1. `ctrl+c` to stop proxy (you can stop browser manually)
+1. `make process` to start generation of `m4a` files
 1. Generated files will be in `output` folder
 
 ## Commands
@@ -38,11 +38,6 @@ You have to manually install the mitmproxy certificate:
 
 If mitmproxy reports inability to connect to certain servers, then you may need to upgrade it by running
 `make upgrade`.
-
-## Todo
-
-- Replace `npm-run-all` with `parallel` command
-- Rewrite scripts in Deno instead of Node
 
 ## Notes
 

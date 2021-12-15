@@ -1,0 +1,9 @@
+from pathlib import Path
+
+root = Path(__file__).parent
+
+db_file = root / 'dumpfile.db'
+assets_dir = root / 'assets'
+output_dir = root / 'output'
+cover_art_dir = root / 'cover-art'
+songs_file = assets_dir / 'songs.json'
