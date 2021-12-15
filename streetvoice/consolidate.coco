@@ -11,7 +11,7 @@ def convert_to_m4a(song, output_file):
   if not ts_file.exists():
     return
 
-  subprocess.call([
+  subprocess.run([
     'ffmpeg',
     "-y", # overwrite if file already exists
     "-i", str(ts_file),
@@ -28,7 +28,7 @@ def convert_to_m4a(song, output_file):
     str(output_file),
   ])
 
-  subprocess.call([
+  subprocess.run([
     'aacgain',
     "-r", # apply Track gain automatically (all files set to equal loudness)
     "-k", # automatically lower Track/Album gain to not clip audio
@@ -42,7 +42,7 @@ def add_cover_art(song, output_file):
 
   if image_file.suffix == '.webp':
     png_file = image_file.with_suffix('.png')
-    subprocess.call([
+    subprocess.run([
       'ffmpeg',
       '-y', # overwrite if file already exists
       '-i', str(image_file),
@@ -51,7 +51,7 @@ def add_cover_art(song, output_file):
     image_file = png_file
 
   # We do not use AtomicParsley to add metadata because it tends to fail when trying to add lyrics
-  subprocess.call([
+  subprocess.run([
     'AtomicParsley',
     str(output_file),
     '--artwork', str(image_file),

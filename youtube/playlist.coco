@@ -119,10 +119,10 @@ def add_metadata_for_file(input_file, output_file, meta):
 
   lyrics = '\n\n=====\n\n'.join(lyrics_lst)
 
-  run_process([
+  run_process(
     'ffmpeg',
     '-y',
-    '-i', str(input_file),
+    '-i', input_file,
     '-acodec', 'copy',  # copy audio without additional processing
     '-vn',              # ignore video
     ('-ss', meta.get('start')),
@@ -133,8 +133,8 @@ def add_metadata_for_file(input_file, output_file, meta):
     '-metadata', f"album={meta['album']}",
     '-metadata', f"comment={meta['link']}",
     '-metadata', f"lyrics={lyrics}",
-    str(output_file)
-  ])
+    output_file,
+  )
 
   subprocess.run([
     'aacgain',
@@ -173,23 +173,27 @@ def get_info_objects():
     info['path'] = info_file.parent / info_file.stem |> .with_suffix('.mp4') |> str
     yield info
 
-def run_process(cmd):
+def flat_map(fn, seq) = map(fn, seq) |> flatten
+
+def run_process(*args):
   """
   Like subprocess.run, except (key, value) pairs are injected into the list if value is not None (otherwise the pair is
   discarded)
   """
-  def reducer(acc, item):
+  def mapper(item):
     case item:
       match value if isinstance(value, str):
-        return acc + [item]
+        return [item]
+      match value if isinstance(value, Path):
+        return [str(item)]
       match (key, None):
-        return acc
+        return []
       match (key, value):
-        return acc + list(item)
+        return item
 
-  cmd = reduce(reducer, cmd, [])
-  print(f'Running command: {cmd}')
-  subprocess.run(cmd)
+  args = map(mapper, args) |> flatten
+  print(f'Running command: {args}')
+  subprocess.run(args)
 
 # Entry point
 main()
