@@ -18,8 +18,9 @@ These are scripts to help you process metadata for music files downloaded from Y
 
 ### Install latest version of Python 3
 
-    pyenv install 3.10.0
-    pyenv global 3.10.0
+    pyenv install --list # list all versions you can install
+    pyenv install 3.10.1
+    pyenv global 3.10.1
 
 ## Installation
 
@@ -47,6 +48,6 @@ The version of ffmpeg in the repository won't include Fraunhofer FDK AAC encoder
 
 ## References
 
-- https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu#RevertingChangesMadebyThisGuide
+- https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu
 - https://trac.ffmpeg.org/wiki/CompilationGuide/MacOSX
 - https://trac.ffmpeg.org/wiki/Encode/AAC
