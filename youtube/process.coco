@@ -38,15 +38,11 @@ def print_search_urls():
 def add_metadata_for_file(input_file, output_file, meta):
   lyrics_lst = [meta.get('description', '')]
 
-  # Get lyrics from captions, if any.
-  caption_extensions = ['.zh.vtt', '.zh-Hans.vtt', '.zh-Hant.vtt', '.zh-CN.vtt', '.zh-TW.vtt']
-  for ext in caption_extensions:
-    caption_file = input_file.with_suffix(ext)
-    if caption_file.exists():
-      vtt = webvtt.read(caption_file)
-      text = '\n'.join(c.text for c in vtt.captions)
-      lyrics_lst.append(text)
-      break  # we can stop after processing the first caption file
+  # Get lyrics from captions, if any
+  for caption_file in input_file.parent.glob(f'{input_file.stem}.*.vtt'):
+    vtt = webvtt.read(caption_file)
+    text = '\n'.join(c.text for c in vtt.captions)
+    lyrics_lst.append(text)
 
   lyrics = '\n\n=====\n\n'.join(lyrics_lst)
 
