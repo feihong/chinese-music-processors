@@ -5,6 +5,7 @@ For all downloaded YouTube media files:
 - Adjust gain
 - Add cover art
 """
+import urllib.parse
 import webvtt
 
 from util import *
@@ -30,10 +31,13 @@ def main():
   print_search_urls()
 
 def print_search_urls():
-    print('\nLyrics search strings:')
-    for meta in slurp_json(json_file):
-      query = f"{meta['title']} {meta['artist']} 歌词".replace(' ', '+')
-      print(f"https://www.google.com/search?q={query}")
+  print('\nLyrics search URLS:')
+  for meta in slurp_json(json_file):
+    title, artist = meta['title'], meta['artist']
+    has_intl = max(ord(c) for c in title + artist) > 255
+    lyrics = if has_intl then '歌词' else 'lyrics'
+    query = urllib.parse.urlencode({'q': f'{title} {artist} {lyrics}'})
+    print(f"{artist}  {title}\n    https://www.google.com/search?{query}")
 
 def add_metadata_for_file(input_file, output_file, meta):
   lyrics_lst = [meta.get('description', '')]
