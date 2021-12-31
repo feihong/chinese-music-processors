@@ -1,0 +1,97 @@
+"""
+For all downloaded YouTube media files:
+
+- Add metadata (title, artist, lyrics, etc)
+- Adjust gain
+- Add cover art
+"""
+import webvtt
+
+from util import *
+
+def main():
+  """
+  If youtube.json file exists, iterate over its entries and generate corresponding .m4a files in output directory
+  """
+  if not json_file.exists():
+    return
+
+  for meta in slurp_json(json_file):
+    input_file = Path(meta['path'])
+    info_file = input_file.with_suffix('.info.json')
+    info = slurp_json(info_file)
+    info.update(meta)
+
+    file_name = f"{meta['artist']}  {meta['title']}.m4a".replace('/', '_')
+    output_file = output_dir / file_name
+
+    add_metadata_for_file(input_file, output_file, info)
+
+  print_search_urls()
+
+def print_search_urls():
+    print('\nLyrics search strings:')
+    for meta in slurp_json(json_file):
+      query = f"{meta['title']} {meta['artist']} 歌词".replace(' ', '+')
+      print(f"https://www.google.com/search?q={query}")
+
+def add_metadata_for_file(input_file, output_file, meta):
+  lyrics_lst = [meta.get('description', '')]
+
+  # Get lyrics from captions, if any.
+  caption_extensions = ['.zh.vtt', '.zh-Hans.vtt', '.zh-Hant.vtt', '.zh-CN.vtt', '.zh-TW.vtt']
+  for ext in caption_extensions:
+    caption_file = input_file.with_suffix(ext)
+    if caption_file.exists():
+      vtt = webvtt.read(caption_file)
+      text = '\n'.join(c.text for c in vtt.captions)
+      lyrics_lst.append(text)
+      break  # we can stop after processing the first caption file
+
+  lyrics = '\n\n=====\n\n'.join(lyrics_lst)
+
+  run_process(
+    'ffmpeg',
+    '-y',
+    '-i', input_file,
+    '-acodec', 'copy',  # copy audio without additional processing
+    '-vn',              # ignore video
+    ('-ss', meta.get('start')),
+    ('-to', meta.get('end')),
+    '-metadata', f"genre={meta['genre']}",
+    '-metadata', f"title={meta['title']}",
+    '-metadata', f"artist={meta['artist']}",
+    '-metadata', f"album={meta['album']}",
+    '-metadata', f"comment={meta['link']}",
+    '-metadata', f"lyrics={lyrics}",
+    output_file,
+  )
+
+  run_process(
+    'aacgain',
+    '-r',  # apply Track gain automatically (all files set to equal loudness)
+    '-k',  # automatically lower Track/Album gain to not clip audio
+    output_file,
+  )
+
+  image_file = input_file.with_suffix('.jpg')
+  if image_file.exists():
+    # Use imagemagick to fix .jpg file so it can be used by AtomicParsley
+    run_process('convert', image_file, image_file)
+  else:
+    # Use imagemagick to convert .webp file to .jpg file so it can be used by AtomicParsley
+    webp_file = input_file.with_suffix('.webp')
+    if webp_file.exists():
+      run_process('convert', webp_file, image_file)
+
+  run_process(
+    'AtomicParsley',
+    output_file,
+    '--artwork', image_file,
+    '--overWrite',
+  )
+  print(f'\nOutput files generated in {output_file}')
+
+# Entry point
+main()
+

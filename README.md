@@ -24,6 +24,10 @@ These are scripts to help you process metadata for music files downloaded from Y
 
 ## Installation
 
+Install Python dependencies:
+
+    pip install --user --requirement requirements.txt
+
 ### Mac
 
 ```
@@ -119,3 +123,4 @@ Compilation takes a pretty good chunk of time. Remember to clean up the `ffmpeg_
 - https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu
 - https://trac.ffmpeg.org/wiki/CompilationGuide/MacOSX
 - https://trac.ffmpeg.org/wiki/Encode/AAC
+- [MP4 tags](https://mutagen.readthedocs.io/en/latest/api/mp4.html?highlight=FORMAT_JPEG#mutagen.mp4.MP4Tags)

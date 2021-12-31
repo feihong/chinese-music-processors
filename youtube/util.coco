@@ -1,0 +1,33 @@
+import json
+import subprocess
+from pathlib import Path
+
+here = Path(__file__).parent
+
+download_dir = here / 'downloads'
+output_dir = here / 'output'
+json_file = here / 'youtube.json'
+
+def slurp_json(json_file) = json_file.read_text() |> json.loads
+
+def spit_json(json_file, obj) = json.dumps(obj, indent=2, ensure_ascii=False) |> json_file.write_text
+
+def run_process(*args):
+  """
+  Like subprocess.run, except (key, value) pairs are injected into the list if value is not None (otherwise the pair is
+  discarded)
+  """
+  def mapper(item):
+    case item:
+      match value if isinstance(value, str):
+        return [item]
+      match value if isinstance(value, Path):
+        return [str(item)]
+      match (key, None):
+        return []
+      match (key, value):
+        return item
+
+  args = map(mapper, args) |> flatten
+  print(f'Running command: {args}')
+  subprocess.run(args)
