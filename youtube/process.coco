@@ -5,8 +5,8 @@ For all downloaded YouTube media files:
 - Adjust gain
 - Add cover art
 """
+import re
 import urllib.parse
-import webvtt
 
 from util import *
 
@@ -15,6 +15,7 @@ def main():
   If youtube.json file exists, iterate over its entries and generate corresponding .m4a files in output directory
   """
   if not json_file.exists():
+    print('youtube.json does not exist')
     return
 
   for meta in slurp_json(json_file):
@@ -39,13 +40,27 @@ def print_search_urls():
     query = urllib.parse.urlencode({'q': f'{title} {artist} {lyrics}'})
     print(f"{artist}  {title}\n    https://www.google.com/search?{query}")
 
+def get_lyrics_from_vtt(vtt_file):
+  capture = False
+  with vtt_file.open('r', encoding='utf-8') as fp:
+    while True:
+      line = fp.readline()
+      if line == '':
+        break
+
+      line = line.strip()
+      if re.match(r'^\d{2}:\d{2}:\d{2}\.\d{3} --> \d{2}:\d{2}:\d{2}\.\d{3}$', line):
+        capture = True
+      elif capture and line != '':
+        yield line
+
 def add_metadata_for_file(input_file, output_file, meta):
-  lyrics_lst = [meta.get('description', '')]
+  desc = meta.get('description')
+  lyrics_lst = if desc is not None then [desc] else []
 
   # Get lyrics from captions, if any
   for caption_file in input_file.parent.glob(f'{input_file.stem}.*.vtt'):
-    vtt = webvtt.read(caption_file)
-    text = '\n'.join(c.text for c in vtt.captions)
+    text = get_lyrics_from_vtt(caption_file) |> '\n'.join
     lyrics_lst.append(text)
 
   lyrics = '\n\n=====\n\n'.join(lyrics_lst)
