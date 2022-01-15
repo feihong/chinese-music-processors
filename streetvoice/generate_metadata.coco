@@ -16,7 +16,8 @@ genre_map = {
   7: '另类 Alternative',
   8: '后摇滚 Post rock',
   10: '朋克 Punk',
-  12: 'R&B/Soul',
+  11: '雷鬼/放克 Reggae/Funk',
+  12: '节奏蓝调/灵魂 R&B/Soul',
   16: 'Soundtrack/New Age',
   17: '世界 World',
 }
