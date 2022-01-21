@@ -20,6 +20,7 @@ genre_map = {
   12: '节奏蓝调/灵魂 R&B/Soul',
   16: 'Soundtrack/New Age',
   17: '世界 World',
+  20: '舞曲 Dance',
 }
 
 image_id_regex = r'.*/([a-zA-Z0-9]+)[.](?:jpg|jpeg|png)'
