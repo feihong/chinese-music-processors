@@ -74,5 +74,5 @@ def info_to_meta(info_objects):
       end=None,
     )
 
-# Entry point
-main()
+if __name__ == '__main__':
+  main()
