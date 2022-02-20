@@ -1,14 +1,3 @@
-UNAME := $(shell uname)
-
-ifeq ($(UNAME),Darwin)
-  BRAVE := open -a "Brave Browser"
-else
-  BRAVE := brave
-endif
-
-install:
-	yarn install
-
 upgrade:
 	pip install --user --upgrade mitmproxy
 

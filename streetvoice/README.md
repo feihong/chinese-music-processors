@@ -31,8 +31,9 @@ You have to manually install the mitmproxy certificate:
 
 ## Commands
 
-    mitmdump -ns addons/list_paths.py -r dumpfile
-    mitmdump -ns addons/dump_all_cover_art.py -r dumpfile
+View contents of dumpfile visually
+
+    mitmweb -r dumpfile
 
 ## Troubleshooting
 
@@ -41,6 +42,6 @@ If mitmproxy reports inability to connect to certain servers, then you may need 
 
 ## Notes
 
-Currently we use Brave because its [command line interface is quite convenient](https://support.brave.com/hc/en-us/articles/360044860011-How-Do-I-Use-Command-Line-Flags-in-Brave-). Update: Doesn't look like Brave works anymore, probably have to switch back to Firefox.
+We used to use Brave because its [command line interface is quite convenient](https://support.brave.com/hc/en-us/articles/360044860011-How-Do-I-Use-Command-Line-Flags-in-Brave-) was quite convenient and nice. However, after a recent update it stopped working with mitmproxy, so we've switched back to Firefox.
 
 In the past, we used Puppeteer to open up a separate browser instance that is automatically configured to use mitmproxy. This is convenient, but Puppeteer eats up CPU like crazy. Playwright is similar to Puppeteer and has a somewhat nicer API, but after opening a browser window, it can't download any media files (this issue appears on both Mac and Linux).
