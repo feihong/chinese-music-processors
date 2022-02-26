@@ -19,30 +19,24 @@ These are scripts to help you process metadata for music files downloaded from Y
 ### Install latest version of Python 3
 
     pyenv install --list # list all versions you can install
-    pyenv install 3.10.1
-    pyenv global 3.10.1
+    pyenv install 3.10.2
+    pyenv global 3.10.2
 
 ## Installation
 
 Install Python dependencies:
 
-    pip install --user --requirement requirements.txt
+    make install
 
-### Mac
+### Mac dependencies
 
-```
-brew install aacgain atomicparsley wget
-brew install ffmpeg --with-fdk-aac
-```
+    brew install aacgain atomicparsley wget
+    brew install ffmpeg --with-fdk-aac
 
-### Linux
+### Linux dependencies
 
-Install command line tools on Ubuntu:
-
-```
-sudo apt-get install atomicparsley mp3gain imagemagick
-sudo snap install aacgain
-```
+    sudo apt-get install atomicparsley mp3gain imagemagick
+    sudo snap install aacgain
 
 ### ffmpeg
 
@@ -113,10 +107,6 @@ hash -r
 ```
 
 Compilation takes a pretty good chunk of time. Remember to clean up the `ffmpeg_sources` and `ffmpeg_build` directories after you're done.
-
-### Python dependencies
-
-    pip install --user --requirement requirements.txt
 
 ## References
 
