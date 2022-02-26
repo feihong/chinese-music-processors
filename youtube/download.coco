@@ -8,12 +8,13 @@ Download all the songs inside a YouTube playlist
 """
 import sys
 from pathlib import Path
+from dotenv import dotenv_values
 from util import *
 
-import settings
+youtube_playlist = dotenv_values('../.env')['youtube_playlist']
 
 def main():
-  playlist_url = if len(sys.argv) > 1 then sys.argv[1] else settings.YOUTUBE_PLAYLIST
+  playlist_url = if len(sys.argv) > 1 then sys.argv[1] else youtube_playlist
   download_songs(playlist_url)
   generate_json()
 
