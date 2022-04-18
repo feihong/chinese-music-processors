@@ -3,7 +3,7 @@ import re
 import urllib.parse
 import jinja2
 
-input_file = Path('2018.txt')
+input_file = Path('2020-2021-hot.txt')
 output_file = Path('output.html')
 
 def get_tracks():
