@@ -11,7 +11,7 @@ songs = paths.songs_file.read_text() |> json.loads
 
 with sqlite3.connect(paths.db_file) as conn:
   for song in songs:
-    (data_,) = conn.execute(f"SELECT data FROM dump WHERE path LIKE '%/song/{song['id']}/%fields=lyrics%'").fetchone()
+    (data_,) = conn.execute(f"SELECT data FROM dump WHERE path LIKE '%/song/{song['id']}/?_=%'").fetchone()
     song['lyrics'] = json.loads(data_)['lyrics'].replace(r'\r\n', '\n')
 
     # Get id of .mp3 file
@@ -20,11 +20,15 @@ with sqlite3.connect(paths.db_file) as conn:
 
     # Write cover art to disk (grab the largest image we downloaded)
     sql = f"SELECT data, content_type FROM dump WHERE path LIKE '%/{song['image_id']}%' ORDER BY length(data) DESC"
-    data_, content_type = conn.execute(sql).fetchone()
-    extension = re.match(r'image/([a-z]+)', content_type) |> .group(1)
-    image_file = paths.assets_dir / f"{song['image_id']}.{extension}"
-    image_file.write_bytes(data_)
-    song['image_file'] = str(image_file)
+    try:
+      data_, content_type = conn.execute(sql).fetchone()
+      extension = re.match(r'image/([a-z]+)', content_type) |> .group(1)
+      image_file = paths.assets_dir / f"{song['image_id']}.{extension}"
+      image_file.write_bytes(data_)
+      song['image_file'] = str(image_file)
+    except:
+      print(f'Could not find image for {song["title"]}')
+      song['image_file'] = None
 
     # Create single .ts file by concatenating individual .ts files that have the same file_id
     sql = f"SELECT data FROM dump WHERE path LIKE '%/{song['file_id']}.mp3%' ORDER BY path"

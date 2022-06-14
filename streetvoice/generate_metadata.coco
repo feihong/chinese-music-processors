@@ -23,7 +23,7 @@ genre_map = {
   20: '舞曲 Dance',
 }
 
-image_id_regex = r'.*/([a-zA-Z0-9]+)[.](?:jpg|jpeg|png|JPG)'
+image_id_regex = r'.*/([a-zA-Z0-9]+)[.](?:jpg|jpeg|png)'
 
 def get_songs(conn):
   sql = "SELECT data FROM dump WHERE path LIKE '%song_ids=%' AND content_type LIKE 'application/json%'"
@@ -36,7 +36,7 @@ def get_songs(conn):
         artist=result['user']['profile']['nickname'],
         url=f"https://streetvoice.com/{result['user']['username']}/songs/{result['id']}/",
         image_url=result['image'],
-        image_id=re.match(image_id_regex, result['image']) |> .group(1),
+        image_id=re.match(image_id_regex, result['image'], re.IGNORECASE) |> .group(1),
         album=if result['album'] then result['album']['name'] else "",
         genre=genre_map.get(result['genre']) ?? result['genre'],
         year=result['created_at'][:4],

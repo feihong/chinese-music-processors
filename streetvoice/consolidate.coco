@@ -36,6 +36,8 @@ def convert_to_m4a(song, output_file):
   ])
 
 def add_cover_art(song, output_file):
+  if not song['image_file']:
+    return
   image_file = Path(song['image_file'])
   if not image_file.exists():
     return
