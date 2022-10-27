@@ -1,3 +1,4 @@
+#coconut  # install with pip for now
 mitmproxy
 python-dotenv
 yt-dlp

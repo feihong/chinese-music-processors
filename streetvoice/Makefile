@@ -1,11 +1,11 @@
-upgrade:
-	pip install --user --upgrade mitmproxy
+install:
+	mamba install --file requirements.txt
+
+update:
+	mamba update mitmproxy
 
 proxy:
 	mitmdump -w dumpfile --anticache
-
-browser:
-	$(BRAVE) -n --args --incognito --proxy-server=https://127.0.0.1:8080 https://streetvoice.com/megafeihong
 
 start:
 	python runner.py parallel proxy browser
