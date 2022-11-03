@@ -2,9 +2,9 @@
 
 ## Commands
 
-Upgrade yt-dlp
+Update yt-dlp
 
-    make upgrade
+    make update
 
 Clean up files
 
@@ -20,7 +20,7 @@ Process all downloaded files
 
 ## Instructions for processing YouTube playlist
 
-1. Run `make upgrade` to update the tool that downloads files from YouTube
+1. Run `make update` to update the tool that downloads files from YouTube
 1. Run `make clean` to clean out the downloads directory
 1. Modify `settings.py` to point to the playlist of your choice
 1. Run `make download` to download all songs and metadata from that playlist into downloads. Note that it will always try to download video files in the mp4 format.

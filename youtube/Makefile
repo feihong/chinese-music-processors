@@ -1,5 +1,5 @@
-upgrade:
-	pip install --user --upgrade yt-dlp
+update:
+	mamba update yt-dlp
 
 download:
 	coconut-run download.coco
