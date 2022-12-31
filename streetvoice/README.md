@@ -4,12 +4,13 @@
 
 Install Python dependencies:
 
+    cd ..
     make install
 
 You have to manually install the mitmproxy certificate in Firefox:
 
 1. Visit the [magic domain mitm.it](http://mitm.it) and download the .pem file
-1. Open Certificate Manager by going to Preferences > Privacy & Security > Security > Certificates > View Certificates...
+1. Open Certificate Manager by going to Preferences > Privacy & Security > View Certificates...
 1. Click Import...
 1. Select .pem file you downloaded
 1. Tick both checkboxes

@@ -4,23 +4,7 @@ These are scripts to help you process metadata for music files downloaded from Y
 
 ## Prerequisites
 
-### Linux
-
-    curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
-    # Update ~/.profile and ~/.bashrc according to instructions, then logout and login
-
-### Mac
-
-    brew update
-    brew install pyenv
-    echo 'eval "$(pyenv init --path)"' >> ~/.zprofile
-    echo 'eval "$(pyenv init -)"' >> ~/.zshrc
-
-### Install latest version of Python 3
-
-    pyenv install --list # list all versions you can install
-    pyenv install 3.10.2
-    pyenv global 3.10.2
+Python 3
 
 ## Installation
 
@@ -28,10 +12,15 @@ Install Python dependencies:
 
     make install
 
+Create `.env` file for store some settings
+
+    cp .env.example .env
+
 ### Mac dependencies
 
     brew install aacgain atomicparsley wget
-    brew install ffmpeg --with-fdk-aac
+    brew tap homebrew-ffmpeg/ffmpeg
+    brew install homebrew-ffmpeg/ffmpeg/ffmpeg --with-fdk-aac
 
 ### Linux dependencies
 

@@ -1,8 +1,5 @@
-install:
-	mamba install --file requirements.txt
-
-update:
-	mamba update mitmproxy
+upgrade:
+	pip install --upgrade mitmproxy
 
 proxy:
 	mitmdump -w dumpfile --anticache
@@ -17,4 +14,4 @@ process:
 	python runner.py sequential convert_to_sqlite generate_metadata.coco generate_files.coco consolidate.coco
 
 clean:
-	rm assets/* && rm dumpfile
+	rm assets/*; rm dumpfile
