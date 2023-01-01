@@ -5,7 +5,7 @@ import jinja2
 
 urlencode = urllib.parse.urlencode
 
-input_file = Path('2022.txt')
+input_file = Path('2022-extra.txt')
 output_file = Path('output.html')
 
 def get_tracks():
