@@ -3,15 +3,24 @@ import re
 import urllib.parse
 import jinja2
 
-input_file = Path('2020-2021-hot.txt')
+urlencode = urllib.parse.urlencode
+
+input_file = Path('2022.txt')
 output_file = Path('output.html')
 
 def get_tracks():
   for line in input_file.read_text().strip().splitlines():
     try:
       num, title, artist = re.match(r'(\d+)、(.+)《(.+)》', line).groups()
-      query = 'https://www.youtube.com/results?' + urllib.parse.urlencode({'search_query': f'{title}  {artist}'})
-      yield dict(num=num, title=title, artist=artist, query=query)
+      search = f'{title}  {artist}'
+      yield dict(
+        num=num,
+        title=title,
+        artist=artist,
+        youtube_query='https://youtube.com/results?' + urlencode({'search_query': search}),
+        music_query='https://music.youtube.com/search?' + urlencode({'q': search}),
+        google_query='https://www.google.com/search?' + urlencode({'q': search})
+      )
     except:
       continue
 
@@ -26,9 +35,10 @@ tmpl = jinja2.Template("""
   <body>
     {% for track in tracks %}
       <p>
-        {{ track['num'] }}
-        <a href="{{ track['query'] }}" target="_blank">{{ track['title'] }}</a>
-        ✪ {{ track['artist'] }}
+        {{ track['num'] }} {{ track['title'] }} &nbsp;{{ track['artist'] }}
+        <a href="{{ track['music_query'] }}" target="_blank">music</a>
+        <a href="{{ track['youtube_query'] }}" target="_blank">youtube</a>
+        <a href="{{ track['google_query'] }}" target="_blank">google</a>
       </p>
     {% endfor %}
   </body>
