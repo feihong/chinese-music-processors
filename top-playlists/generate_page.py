@@ -5,13 +5,13 @@ import jinja2
 
 urlencode = urllib.parse.urlencode
 
-input_file = Path('2022-extra.txt')
+input_file = Path('mandogap-albums-2022.txt')
 output_file = Path('output.html')
 
 def get_tracks():
   for line in input_file.read_text().strip().splitlines():
     try:
-      num, title, artist = re.match(r'(\d+)、(.+)《(.+)》', line).groups()
+      num, artist, title = re.match(r'(\d+)、(.+)《(.+)》', line).groups()
       search = f'{title}  {artist}'
       yield dict(
         num=num,
@@ -28,7 +28,7 @@ tmpl = jinja2.Template("""
 <!doctype html>
 <html lang="en">
   <head>
-    <title>EarGod List</title>
+    <title>Top Playlist</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
   </head>

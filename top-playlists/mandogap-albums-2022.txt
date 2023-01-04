@@ -1,0 +1,52 @@
+https://mandogap.substack.com/p/top-40-mandopop-albums-of-the-year
+
+// Print out albums in the format we like
+re = /(\d+)\. (.*) - (.*)/
+output = [...document.querySelectorAll('h3.header-with-anchor-widget')]
+.map(node => {
+  const [_, num, artist, title] = node.innerText.match(re)
+  return `${num}、${artist}《${title}》`
+})
+.join('\n')
+console.log(output)
+
+40、Qi Zitan《I Don’t Belong Anywhere》
+39、Zhao Lei《Teen on Shuqian Street》
+38、JIHU《Unknown Jihu》
+37、Yo Lee《Cooling Down》
+36、WeiBird《Good Afternoon, Good Evening and Good Night》
+35、L8ching《Dive & Give》
+34、GALI《ATLANTIS》
+33、Jude Chiu《The Last Aquarium》
+32、1ove1etter.exe《fLiOrVsEt》
+31、Elephant Gym《Dreams》
+30、Sound Fragment《有限身 无穷念》
+29、Quanzo《RE: TYPE》
+28、mukio《Master of Life》
+27、The Chairs《Shangri-La Is Calling》
+26、Flashbabeboi《杂》
+25、Iruka Porisu《Bad News Punched!》
+24、Ann Bai《All About You》
+23、Cheng Bi《The Book of Songs》
+22、Lily Chou-Chou Lied《The Foreteller》
+21、Lil Ghost《DEADLINE》
+20、insecteens《In a Flash》
+19、GG LONG XIA《54088》
+18、Crispy《Take It Slow, I Will Be There》
+17、Voision Xi《Lost for Words》
+16、step.jad《TIMESMITH2000》
+15、Limi《Bad Babe》
+14、J-Fever, Zhou Shijue & Eddie Beatz《去爱去哭去疑惑》
+13、Wen Zhaojie《爱神》
+12、Shallow Levée《Endless Playlist》
+11、TIA RAY《ONCE UPON A MOON》
+10、Sandee Chan《Discipline》
+9、Sweet John《In Mind》
+8、Akini Jing & Chace《Endless Farewell》
+7、GONG《The age of sundogs》
+6、Wu Qingfeng《Mallarme’s Tuesdays》
+5、E.SO《EARTHBOUND》
+4、West by West《Hot Water Music》
+3、Xiao Xia《X II A O》
+2、drogas《teardrop,saidmyname.》
+1、Faye《Faye詹雯婷 在雲彩上跳舞 嘰嘰喳喳》
