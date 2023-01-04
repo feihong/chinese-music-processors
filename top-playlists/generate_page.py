@@ -17,8 +17,8 @@ def get_tracks():
         num=num,
         title=title,
         artist=artist,
-        youtube_query='https://youtube.com/results?' + urlencode({'search_query': search}),
         music_query='https://music.youtube.com/search?' + urlencode({'q': search}),
+        youtube_query='https://youtube.com/results?' + urlencode({'search_query': search}),
         google_query='https://www.google.com/search?' + urlencode({'q': search})
       )
     except:
