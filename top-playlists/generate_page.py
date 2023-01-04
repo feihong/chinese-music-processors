@@ -35,7 +35,7 @@ tmpl = jinja2.Template("""
   <body>
     {% for track in tracks %}
       <p>
-        {{ track['num'] }} {{ track['title'] }} &nbsp;{{ track['artist'] }}
+        {{ track['num'] }}《{{ track['title'] }}》{{ track['artist'] }}
         <a href="{{ track['music_query'] }}" target="_blank">music</a>
         <a href="{{ track['youtube_query'] }}" target="_blank">youtube</a>
         <a href="{{ track['google_query'] }}" target="_blank">google</a>
