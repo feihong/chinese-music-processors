@@ -41,6 +41,8 @@ tmpl = jinja2.Template("""
         <a href="{{ track['google_query'] }}" target="_blank">google</a>
       </p>
     {% endfor %}
+    <!-- allow user to keep scrolling past content -->
+    <div style="height:1000px"></div>
   </body>
 </html>
 """)

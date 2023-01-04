@@ -18,7 +18,7 @@ Create `.env` file for store some settings
 
 ### Mac dependencies
 
-    brew install aacgain atomicparsley wget
+    brew install aacgain atomicparsley imagemagick
     brew tap homebrew-ffmpeg/ffmpeg
     brew install homebrew-ffmpeg/ffmpeg/ffmpeg --with-fdk-aac
 

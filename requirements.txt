@@ -1,4 +1,5 @@
 coconut
 mitmproxy
 python-dotenv
+wheel
 yt-dlp
