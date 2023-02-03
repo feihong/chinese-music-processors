@@ -5,24 +5,33 @@ import jinja2
 
 urlencode = urllib.parse.urlencode
 
-input_file = Path('mandogap-albums-2022.txt')
+input_file = Path('eargod-2022-hot.txt')
 output_file = Path('output.html')
 
-def get_tracks():
+def get_tracks(input_file):
   for line in input_file.read_text().strip().splitlines():
     try:
-      num, artist, title = re.match(r'(\d+)、(.+)《(.+)》', line).groups()
-      search = f'{title}  {artist}'
+      num, artist, title, suffix = re.match(r'(\d+)、(.+)《(.+)》(.*)', line).groups()
+      if suffix == '':
+        search = f'{title}  {artist}'
+        queries_dict = dict(
+          music='https://music.youtube.com/search?' + urlencode({'q': search}),
+          youtube='https://youtube.com/results?' + urlencode({'search_query': search}),
+          google='https://www.google.com/search?' + urlencode({'q': search}),
+        )
+      else:
+        queries_dict = None
+
       yield dict(
         num=num,
         title=title,
         artist=artist,
-        music_query='https://music.youtube.com/search?' + urlencode({'q': search}),
-        youtube_query='https://youtube.com/results?' + urlencode({'search_query': search}),
-        google_query='https://www.google.com/search?' + urlencode({'q': search})
+        queries=queries_dict,
+        link=suffix if suffix.startswith('https://') else None,
       )
     except:
       continue
+
 
 tmpl = jinja2.Template("""
 <!doctype html>
@@ -36,9 +45,14 @@ tmpl = jinja2.Template("""
     {% for track in tracks %}
       <p>
         {{ track['num'] }}《{{ track['title'] }}》{{ track['artist'] }}
-        <a href="{{ track['music_query'] }}" target="_blank">music</a>
-        <a href="{{ track['youtube_query'] }}" target="_blank">youtube</a>
-        <a href="{{ track['google_query'] }}" target="_blank">google</a>
+        {% if track['link'] %}
+          <a href="{{ track['link'] }}" target="_blank">link</a>
+        {% endif %}
+        {% if track['queries'] %}
+          <a href="{{ track['queries']['music'] }}" target="_blank">music</a>
+          <a href="{{ track['queries']['youtube'] }}" target="_blank">youtube</a>
+          <a href="{{ track['queries']['google'] }}" target="_blank">google</a>
+        {% endif %}
       </p>
     {% endfor %}
     <!-- allow user to keep scrolling past content -->
@@ -47,4 +61,4 @@ tmpl = jinja2.Template("""
 </html>
 """)
 
-output_file.write_text(tmpl.render(tracks=get_tracks()))
+output_file.write_text(tmpl.render(tracks=get_tracks(input_file)))
