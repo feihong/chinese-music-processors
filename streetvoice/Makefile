@@ -13,5 +13,8 @@ convert_to_sqlite:
 process:
 	python runner.py sequential convert_to_sqlite generate_metadata.coco generate_files.coco consolidate.coco
 
+move:
+	cd .. && python move.py
+
 clean:
 	rm assets/*; rm dumpfile

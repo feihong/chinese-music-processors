@@ -7,5 +7,8 @@ download:
 process:
 	coconut-run process.coco
 
+move:
+	cd .. && python move.py
+
 clean:
 	rm youtube.json; rm downloads/*
