@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div>Source: {{ source }}</div>
+  {% for track in tracks %}
+    <p>
+      {{ track['num'] }}《{{ track['title'] }}》{{ track['artist'] }}
+      {% if track['link'] %}
+        <a href="{{ track['link'] }}" target="_blank">link</a>
+      {% endif %}
+      {% if track['queries'] %}
+        <a href="{{ track['queries']['music'] }}" target="_blank">YT Music</a>
+        <a href="{{ track['queries']['youtube'] }}" target="_blank">YouTube</a>
+        <a href="{{ track['queries']['google'] }}" target="_blank">Google</a>
+      {% endif %}
+    </p>
+  {% endfor %}
+  <!-- allow user to keep scrolling past content -->
+  <div style="height:1000px"></div>
+{% endblock %}

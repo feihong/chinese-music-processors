@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<ul>
+  {% for playlist in playlists %}
+    <li>
+      <a href="{{ playlist['slug'] }}.html">{{ playlist['title'] }}</a>
+    </li>
+  {% endfor %}
+</ul>
+{% endblock %}
