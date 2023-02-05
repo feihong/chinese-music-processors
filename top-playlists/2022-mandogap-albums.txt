@@ -1,4 +1,5 @@
 https://mandogap.substack.com/p/top-40-mandopop-albums-of-the-year
+Top 40 Mandopop Albums of 2022
 
 // Print out albums in the format we like
 re = /(\d+)\. (.*) - (.*)/
