@@ -1,11 +1,17 @@
 from pathlib import Path
+import sys
 import re
 import urllib.parse
 import jinja2
 
 urlencode = urllib.parse.urlencode
 
-input_file = Path('eargod-2022-hot.txt')
+try:
+  input_file = Path(sys.argv[1])
+except:
+  txt_files = sorted(Path('.').glob('*.txt'), key=lambda f: f.stat().st_mtime, reverse=True)
+  input_file = txt_files[0]
+
 output_file = Path('output.html')
 
 def get_tracks(input_file):

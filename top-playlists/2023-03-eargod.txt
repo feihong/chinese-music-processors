@@ -1,0 +1,126 @@
+https://weibo.com/1344386244/MEpNwgf4Q?pagetype=profilefeed
+
+import re
+lines = """\
+...
+""".splitlines()
+lines = [l.strip() for l in lines if l.strip()]
+for i, line in enumerate(lines, 1):
+  m = re.match(r'(.*)〈(.*)〉', line)
+  print(f'{i}、{m.group(1)}《{m.group(2)}》')
+
+1、Two Year Vacation《High Hopes, Low Expectations》
+2、ちゃんみな《You Just Walked In My Life》
+3、frogi《bop it》
+4、MXFRUIT《strawberry ice cream》
+5、Søren Emil《Breaking Hearts》
+6、Vaundy《そんなbitterな話》
+7、nicole han《NERVE》
+8、Daisy Jones & The Six《Look At Us Now (Honeycomb)》
+9、Lola Young《What Is It About Me》
+10、Lauren Juzang《It'll Be (Video Game Song)》
+11、Paris Paloma《labour》
+12、Zinadelphia《Love Language》
+13、Portugal. The Man《Dummy》
+14、katya.《bad news》
+15、HILLARI《Desperate Soul》
+16、米津玄師《Lady》
+17、Eloise《Therapist》
+18、Benson Boone《Sugar Sweet》
+19、Sam.Sts《AAA》
+20、Chiiild / Charlotte Cardin《I Hope I Packed A Parachute》
+21、IVE《Kitsch》
+22、Lauren Daigle《Thank God I Do》
+23、Melanie Martinez《DEATH》
+24、Dendi Nata / Hendra Kumbara《Abadi》
+25、オーイシマサヨシ《uni-verse》
+26、Billkin《ยิ้มทั้งน้ำตา》
+27、Day We Ran《Forestry》
+28、Lana Del Rey《Paris, Texas》
+29、mazie《are you feeling it now》
+30、大都会乐团《恰恰陷阱》not found
+31、blah《Candy For You》
+32、Stacey Ryan《Bad For Me》
+33、李杰明《带你到我怀里》
+34、AGA《MIZU》
+35、にしな《春一番》
+36、PLAVE《기다릴게》
+37、许书豪 / 韦礼安《小朋友才做选择》
+38、Maisie Peters《Lost The Breakup》
+39、RPT MCK《Anh Đã Ổn Hơn》
+40、Meghan Trainor《Mother》
+41、step.jad依加《迷宫》
+42、Maude Latour《Heaven》
+43、Morgan Wallen《One Thing At A Time》no song by this name
+44、Q《NOT ALONE》
+45、迷失心灵收管所《浴缸》not found
+46、Winny《Don't Leave》
+47、KnowKnow《Sometimes》
+48、Zeph《like everyone else》
+49、dori《My Light》
+50、张惠妹《离别总是那么突然》
+51、Hozier《Eat Your Young》
+52、Tiny Habits《one more》
+53、Kroi《PULSE》
+54、Pynch《London》
+55、Claire Rosinkranz《Never Goes Away》
+56、Nothing But Thieves《Welcome to the DCC》
+57、Jonathan Hutcherson《Dust》
+58、雷雨心《浪漫默片》not found
+59、Al Calderon《Sleepwalker》
+60、Taiu / Milo J《Rara Vez》
+61、地磁卡《每时每刻》
+62、Eddie Benjamin《All for Nothing》
+63、Jason Mraz《You Might Like It》
+64、Saint Levant《From Gaza, With Love》
+65、施鑫文月《Sad Boi, 耙耳朵》
+66、Michael Brun / Oxlade《Clueless》
+67、Sabrina Carpenter《Feather》
+68、Ryann / Charlie Hickey《Nineties》
+69、Awesome City Club《Talkin' Talkin'》
+70、FLO/Missy Elliott《Fly Girl》
+71、陈珊妮《教我如何做你的爱人》
+72、幾田りら《サークル》
+73、Arlo Parks《Weightless》
+74、Vacance.ZEN / 袁悠范《one and only》
+75、苏珮卿《You'll Live Forever in My Songs》
+76、Bakar《Good News》
+77、郑润泽《你已把我的心磨平》
+78、坏特 ?te《Finally》
+79、Ni'jah / Childish Gambino / KIRBY《Sticky》
+80、白百EndlessWhite乐队《巨大的夜晚》
+81、FANCYnical.lee《Second Street》
+82、朱婧汐《Pump Up》
+83、LOVA《I Raised Your Boyfriend》
+84、AdeKunle Gold / Zinoleesky《Party No Dey Stop》
+85、LINGBRANDON《herBODY》
+86、新裤子《悲伤朋克》
+87、Victoria Monét / Lucky Daye《Smoke》
+88、郑敬儒《Sorry Days (Live)》
+89、Sion《Money Machine》
+90、悲剧药方《自喜的咒语》
+91、麋先生《一种说法》
+92、Gabi Sklar《Pardon My French》
+93、Bloody Woods《From the Forests and Highlands》
+94、吴炳文《三月烟火》not found
+95、裴仁赫《몬스터 오디세이》
+96、吴汶芳《我是怎么走到这里的》
+97、가호《Love Me》
+98、宝尔金《昨夜下落》
+99、Blessing《Plain Jane》
+100、拟白《时相》
+101、邱彦筒《*~Silencio…Shh》
+102、花墙《麻风骑士》not found
+103、FiFi Zhang《So Beautiful So Lonely》
+104、優里《アストロノーツ》
+105、汤骏业《浮光》
+106、Zior Park《PSYCHO LOVE》
+107、追光歌手《礼物》not found
+108、변화무쌍《열렬한 사랑》
+109、郑欣宜《不类似情歌》
+110、조선블루스《脚步》
+111、FOOL IN THE POOL《Illusion》
+112、권세인《when I was young》not found
+113、박지지《Rhythm Of Love》
+114、乩童秩序《无影》not found
+115、张国荣《最爱是谁》
