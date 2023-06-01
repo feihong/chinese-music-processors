@@ -28,6 +28,8 @@ def run_process(*args):
       match (key, value):
         return item
 
-  args = map(mapper, args) |> flatten
+  args = map(mapper, args) |> flatten |> list
   print(f'Running command: {args}')
-  subprocess.run(args)
+  returncode = subprocess.run(args).returncode
+  if returncode != 0:
+    raise Exception(f'{args[0]} command failed')
